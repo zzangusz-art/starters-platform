@@ -1977,8 +1977,14 @@
       });
       const data = await res.json();
       if (!res.ok) { showError('login-error', data.message || '로그인에 실패했습니다.'); return; }
-      // 토큰을 해시로 전달 → React가 읽어 localStorage에 저장 후 대시보드로 이동
-      window.location.href = `${APP_BASE}/#token=` + data.token;
+      // 프로덕션(same-origin): localStorage에 직접 저장 → /dashboard
+      // 로컬(file:// or localhost): 해시로 전달
+      if (isLocal) {
+        window.location.href = `${APP_BASE}/#token=` + data.token;
+      } else {
+        localStorage.setItem('token', data.token);
+        window.location.href = '/dashboard';
+      }
     } catch {
       showError('login-error', '서버에 연결할 수 없습니다. 플랫폼이 실행 중인지 확인하세요.');
     } finally {
@@ -2007,7 +2013,12 @@
       });
       const data = await res.json();
       if (!res.ok) { showError('reg-error', data.message || '가입에 실패했습니다.'); return; }
-      window.location.href = `${APP_BASE}/#token=` + data.token;
+      if (isLocal) {
+        window.location.href = `${APP_BASE}/#token=` + data.token;
+      } else {
+        localStorage.setItem('token', data.token);
+        window.location.href = '/dashboard';
+      }
     } catch {
       showError('reg-error', '서버에 연결할 수 없습니다. 플랫폼이 실행 중인지 확인하세요.');
     } finally {
