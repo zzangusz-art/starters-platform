@@ -1,0 +1,19 @@
+{
+  "name": "starters-platform",
+  "version": "1.0.0",
+  "description": "스타터즈 — 프랜차이즈 확장 원스톱 컨설팅 플랫폼",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "cd client && npm install && npm run build",
+    "start": "cd server && node index.js",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"green,cyan\" \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "cd server && npm install && cd ../client && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

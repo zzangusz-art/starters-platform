@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스타터즈 - 프랜차이즈 확장 원스톱 컨설팅 플랫폼</title>
+<style>
+  :root {
+    --black: #0a0a0a;
+    --black-soft: #111111;
+    --black-card: #161616;
+    --black-border: #222222;
+    --green: #22c55e;
+    --green-dark: #16a34a;
+    --green-light: #4ade80;
+    --green-dim: rgba(34,197,94,0.12);
+    --green-glow: rgba(34,197,94,0.3);
+    --white: #ffffff;
+    --gray-100: #f3f4f6;
+    --gray-300: #9ca3af;
+    --gray-400: #6b7280;
+    --gray-500: #4b5563;
+    --gray-600: #374151;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', -apple-system, sans-serif; line-height:1.6; }
+
+  /* NAV */
+  nav { position: fixed; top:0; left:0; right:0; z-index:100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--black-border); }
+  .nav-inner { max-width:1200px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; justify-content:space-between; }
+  .nav-logo { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:900; letter-spacing:-0.5px; color:var(--white); text-decoration:none; }
+  .nav-logo span { color:var(--green); }
+  .nav-links { display:flex; align-items:center; gap:28px; }
+  .nav-links a { color:var(--gray-300); text-decoration:none; font-size:14px; font-weight:500; transition:color .2s; }
+  .nav-links a:hover { color:var(--white); }
+  .nav-cta { background:var(--green); color:var(--black); font-size:14px; font-weight:700; padding:8px 20px; border-radius:6px; text-decoration:none; transition:background .2s; }
+  .nav-cta:hover { background:var(--green-light); }
+
+  /* HERO */
+  .hero { min-height:100vh; display:flex; align-items:center; position:relative; overflow:hidden; padding-top:64px; }
+  .hero-bg { position:absolute; inset:0; }
+  .hero-grid { position:absolute; inset:0; background-image: linear-gradient(var(--black-border) 1px, transparent 1px), linear-gradient(90deg, var(--black-border) 1px, transparent 1px); background-size:60px 60px; opacity:.3; }
+  .hero-glow { position:absolute; top:20%; left:50%; transform:translateX(-50%); width:800px; height:500px; background:radial-gradient(ellipse, rgba(34,197,94,0.15) 0%, transparent 70%); pointer-events:none; }
+  .hero-content { position:relative; max-width:1200px; margin:0 auto; padding:80px 24px; text-align:center; }
+  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:var(--green-dim); border:1px solid rgba(34,197,94,0.4); color:var(--green-light); font-size:13px; font-weight:600; padding:6px 16px; border-radius:100px; margin-bottom:32px; }
+  .hero-badge-dot { width:6px; height:6px; background:var(--green); border-radius:50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+  .hero h1 { font-size:clamp(36px,6vw,72px); font-weight:900; line-height:1.1; letter-spacing:-2px; margin-bottom:24px; }
+  .hero h1 .highlight { color:var(--green); }
+  .hero-sub { font-size:clamp(16px,2vw,20px); color:var(--gray-300); max-width:640px; margin:0 auto 48px; line-height:1.7; }
+  .hero-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .btn-primary { background:var(--green); color:var(--black); font-weight:800; font-size:16px; padding:14px 32px; border-radius:8px; text-decoration:none; border:none; cursor:pointer; transition:all .2s; }
+  .btn-primary:hover { background:var(--green-light); transform:translateY(-1px); box-shadow:0 8px 24px var(--green-glow); }
+  .btn-outline { background:transparent; color:var(--white); font-weight:700; font-size:16px; padding:14px 32px; border-radius:8px; text-decoration:none; border:1px solid var(--black-border); cursor:pointer; transition:all .2s; }
+  .btn-outline:hover { border-color:var(--green); color:var(--green); }
+  .hero-stats { display:flex; gap:48px; justify-content:center; margin-top:72px; flex-wrap:wrap; }
+  .stat-item { text-align:center; }
+  .stat-num { font-size:36px; font-weight:900; color:var(--green); line-height:1; }
+  .stat-label { font-size:13px; color:var(--gray-400); margin-top:4px; }
+
+  /* SECTIONS */
+  section { padding:96px 24px; }
+  .section-inner { max-width:1200px; margin:0 auto; }
+  .section-badge { display:inline-block; background:var(--green-dim); color:var(--green); font-size:12px; font-weight:700; padding:4px 12px; border-radius:4px; letter-spacing:1px; margin-bottom:16px; }
+  .section-title { font-size:clamp(28px,4vw,44px); font-weight:900; letter-spacing:-1px; margin-bottom:16px; }
+  .section-desc { font-size:16px; color:var(--gray-300); max-width:560px; line-height:1.8; }
+  .text-center { text-align:center; }
+  .text-center .section-desc { margin:0 auto; }
+
+  /* PROBLEM */
+  .problem { background:var(--black-soft); }
+  .problem-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-top:48px; }
+  .problem-card { background:var(--black-card); border:1px solid var(--black-border); border-radius:12px; padding:28px; }
+  .problem-icon { font-size:28px; margin-bottom:16px; }
+  .problem-card h3 { font-size:17px; font-weight:700; margin-bottom:8px; }
+  .problem-card p { font-size:14px; color:var(--gray-300); line-height:1.7; }
+
+  /* SERVICES */
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:56px; }
+  .service-card { background:var(--black-card); border:1px solid var(--black-border); border-radius:16px; padding:32px 28px; transition:all .3s; position:relative; overflow:hidden; }
+  .service-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--green), transparent); opacity:0; transition:opacity .3s; }
+  .service-card:hover { border-color:rgba(34,197,94,0.4); transform:translateY(-4px); box-shadow:0 20px 40px rgba(0,0,0,0.4); }
+  .service-card:hover::before { opacity:1; }
+  .service-svg { width:72px; height:72px; margin-bottom:24px; }
+  .service-card h3 { font-size:19px; font-weight:800; margin-bottom:12px; }
+  .service-card p { font-size:14px; color:var(--gray-300); line-height:1.7; margin-bottom:20px; }
+  .service-list { list-style:none; }
+  .service-list li { font-size:13px; color:var(--gray-400); padding:4px 0; display:flex; align-items:center; gap:8px; }
+  .service-list li::before { content:''; width:4px; height:4px; background:var(--green); border-radius:50%; flex-shrink:0; }
+
+  /* PROCESS / STAGES */
+  .process { background:var(--black-soft); }
+  .stages { display:flex; flex-direction:column; gap:48px; margin-top:56px; }
+  .stage-header { display:flex; align-items:center; gap:16px; margin-bottom:24px; }
+  .stage-num { width:48px; height:48px; background:var(--green); color:var(--black); font-size:20px; font-weight:900; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .stage-title { font-size:24px; font-weight:800; }
+  .stage-subtitle { font-size:14px; color:var(--gray-400); margin-top:2px; }
+  .stage-arrow { display:flex; justify-content:center; font-size:28px; color:var(--green); margin:8px 0; }
+  .stage-items { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+  .stage-item { background:var(--black-card); border:1px solid var(--black-border); border-radius:10px; padding:18px; }
+  .stage-item h4 { font-size:15px; font-weight:700; margin-bottom:6px; color:var(--green-light); }
+  .stage-item p { font-size:13px; color:var(--gray-300); line-height:1.6; }
+
+  /* PRICING */
+  .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:28px; margin-top:56px; }
+  .pricing-card { background:var(--black-card); border:1px solid var(--black-border); border-radius:20px; padding:36px 32px; position:relative; transition:all .3s; }
+  .pricing-card.featured { border-color:var(--green); box-shadow:0 0 40px var(--green-glow); }
+  .pricing-popular { position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:var(--green); color:var(--black); font-size:12px; font-weight:800; padding:4px 16px; border-radius:100px; white-space:nowrap; }
+  .pricing-stage { font-size:12px; font-weight:700; color:var(--green); letter-spacing:1px; margin-bottom:8px; }
+  .pricing-name { font-size:22px; font-weight:900; margin-bottom:6px; }
+  .pricing-desc { font-size:14px; color:var(--gray-400); margin-bottom:24px; line-height:1.6; }
+  .pricing-price { margin-bottom:8px; }
+  .pricing-price .amount { font-size:36px; font-weight:900; color:var(--green); }
+  .pricing-price .unit { font-size:14px; color:var(--gray-400); margin-left:4px; }
+  .pricing-extra { font-size:13px; color:var(--gray-300); margin-bottom:28px; }
+  .pricing-divider { height:1px; background:var(--black-border); margin:24px 0; }
+  .pricing-features { list-style:none; margin-bottom:28px; }
+  .pricing-features li { font-size:14px; color:var(--gray-300); padding:7px 0; display:flex; align-items:flex-start; gap:10px; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .pricing-features li:last-child { border-bottom:none; }
+  .pricing-features .check { color:var(--green); font-size:15px; flex-shrink:0; margin-top:1px; }
+  .addon-toggle { width:100%; background:none; border:1px solid var(--black-border); border-radius:8px; padding:10px 14px; color:var(--gray-400); font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:all .2s; text-align:left; }
+  .addon-toggle:hover { border-color:rgba(34,197,94,0.4); color:var(--green-light); }
+  .addon-toggle-icon { font-size:16px; transition:transform .3s; flex-shrink:0; }
+  .addon-body { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+  .addon-body.open { max-height:400px; }
+  .addon-toggle.open { border-color:rgba(34,197,94,0.4); color:var(--green-light); }
+  .addon-toggle.open .addon-toggle-icon { transform:rotate(45deg); }
+  .pricing-options { margin-top:4px; }
+  .option-item { display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--gray-300); padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .option-item:last-child { border-bottom:none; }
+  .option-price { color:var(--green-light); font-weight:600; white-space:nowrap; margin-left:12px; }
+  .pricing-btn { display:block; text-align:center; background:var(--green); color:var(--black); font-weight:800; font-size:15px; padding:14px; border-radius:8px; text-decoration:none; transition:all .2s; margin-top:24px; }
+  .pricing-btn:hover { background:var(--green-light); }
+  .pricing-btn.outline { background:transparent; color:var(--white); border:1px solid var(--black-border); }
+  .pricing-btn.outline:hover { border-color:var(--green); color:var(--green); }
+
+  /* EXPERTS */
+  .experts { background:var(--black-soft); }
+  .experts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:24px; margin-top:56px; }
+  .expert-card { background:var(--black-card); border:1px solid var(--black-border); border-radius:16px; padding:28px 24px; text-align:center; transition:all .3s; }
+  .expert-card:hover { border-color:rgba(34,197,94,0.4); transform:translateY(-3px); }
+  .expert-avatar { width:72px; height:72px; border-radius:50%; margin:0 auto 16px; overflow:hidden; background:var(--green-dim); display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:900; color:var(--green); }
+  .expert-name { font-size:17px; font-weight:800; margin-bottom:4px; }
+  .expert-title { font-size:12px; color:var(--green); font-weight:700; margin-bottom:8px; }
+  .expert-career { font-size:13px; color:var(--gray-300); line-height:1.6; }
+  .expert-tags { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:12px; }
+  .expert-tag { font-size:11px; background:var(--green-dim); color:var(--green-light); padding:3px 8px; border-radius:4px; }
+
+  /* FRANCHISES */
+  .franchise-filter { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:32px; }
+  .filter-btn { background:var(--black-card); border:1px solid var(--black-border); color:var(--gray-300); font-size:13px; font-weight:600; padding:8px 18px; border-radius:100px; cursor:pointer; transition:all .2s; }
+  .filter-btn:hover, .filter-btn.active { background:var(--green); color:var(--black); border-color:var(--green); }
+  .franchise-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; }
+  .franchise-card { background:var(--black-card); border:1px solid var(--black-border); border-radius:16px; overflow:hidden; transition:all .3s; cursor:pointer; }
+  .franchise-card:hover { border-color:rgba(34,197,94,0.4); transform:translateY(-3px); box-shadow:0 16px 40px rgba(0,0,0,0.4); }
+  .franchise-img { height:180px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+  .franchise-img-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:48px; }
+  .franchise-body { padding:20px; }
+  .franchise-cat { font-size:11px; font-weight:700; color:var(--green); letter-spacing:.5px; margin-bottom:8px; }
+  .franchise-name { font-size:18px; font-weight:800; margin-bottom:6px; }
+  .franchise-desc { font-size:13px; color:var(--gray-400); line-height:1.6; margin-bottom:16px; }
+  .franchise-meta { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding-top:16px; border-top:1px solid var(--black-border); }
+  .meta-item label { font-size:11px; color:var(--gray-500); display:block; margin-bottom:3px; }
+  .meta-item span { font-size:15px; font-weight:700; color:var(--white); }
+  .meta-item.highlight span { color:var(--green); }
+  .franchise-badge { position:absolute; top:12px; right:12px; background:var(--green); color:var(--black); font-size:11px; font-weight:800; padding:3px 10px; border-radius:4px; }
+
+  /* FAQ */
+  .faq { background:var(--black-soft); }
+  .faq-list { max-width:800px; margin:48px auto 0; }
+  .faq-item { border-bottom:1px solid var(--black-border); }
+  .faq-q { width:100%; background:none; border:none; color:var(--white); text-align:left; font-size:16px; font-weight:600; padding:24px 0; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+  .faq-q:hover { color:var(--green-light); }
+  .faq-icon { font-size:20px; color:var(--green); transition:transform .3s; flex-shrink:0; }
+  .faq-item.open .faq-icon { transform:rotate(45deg); }
+  .faq-a { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+  .faq-item.open .faq-a { max-height:400px; }
+  .faq-a-inner { font-size:15px; color:var(--gray-300); line-height:1.8; padding-bottom:24px; }
+
+  /* CTA */
+  .cta-section { text-align:center; position:relative; overflow:hidden; }
+  .cta-glow { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:600px; height:300px; background:radial-gradient(ellipse, rgba(34,197,94,0.2) 0%, transparent 70%); pointer-events:none; }
+  .cta-section h2 { font-size:clamp(28px,4vw,48px); font-weight:900; letter-spacing:-1px; margin-bottom:20px; position:relative; }
+  .cta-section p { font-size:17px; color:var(--gray-300); max-width:500px; margin:0 auto 40px; line-height:1.7; position:relative; }
+  .cta-actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; position:relative; }
+  .cta-note { font-size:13px; color:var(--gray-500); margin-top:20px; position:relative; }
+
+  /* FOOTER */
+  footer { background:var(--black-soft); border-top:1px solid var(--black-border); padding:48px 24px; }
+  .footer-inner { max-width:1200px; margin:0 auto; }
+  .footer-top { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+  .footer-logo { font-size:24px; font-weight:900; letter-spacing:-1px; margin-bottom:12px; }
+  .footer-logo span { color:var(--green); }
+  .footer-about { font-size:14px; color:var(--gray-400); line-height:1.7; max-width:280px; }
+  .footer-col h4 { font-size:14px; font-weight:700; color:var(--white); margin-bottom:16px; }
+  .footer-col ul { list-style:none; }
+  .footer-col li { font-size:14px; color:var(--gray-400); padding:4px 0; }
+  .footer-bottom { border-top:1px solid var(--black-border); padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:gap; font-size:13px; color:var(--gray-500); }
+
+  /* FLOW ARROW */
+  .flow-arrow { text-align:center; color:var(--green); font-size:32px; margin:12px 0; }
+
+  /* PLATFORM ROLES */
+  .roles-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; margin-top:56px; }
+  .role-card { background:var(--black-card); border:1px solid var(--black-border); border-radius:20px; padding:32px 28px; transition:all .3s; position:relative; overflow:hidden; }
+  .role-card:hover { transform:translateY(-4px); box-shadow:0 20px 48px rgba(0,0,0,0.5); }
+  .role-card.master { border-top:3px solid #f59e0b; }
+  .role-card.rookie { border-top:3px solid #3b82f6; }
+  .role-card.maker { border-top:3px solid #a855f7; }
+  .role-card.mgr { border-top:3px solid var(--green); }
+  .role-icon { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:20px; }
+  .role-icon.master { background:rgba(245,158,11,0.12); }
+  .role-icon.rookie { background:rgba(59,130,246,0.12); }
+  .role-icon.maker { background:rgba(168,85,247,0.12); }
+  .role-icon.mgr { background:var(--green-dim); }
+  .role-title { font-size:11px; font-weight:700; letter-spacing:1.5px; margin-bottom:6px; }
+  .role-title.master { color:#f59e0b; }
+  .role-title.rookie { color:#3b82f6; }
+  .role-title.maker { color:#a855f7; }
+  .role-title.mgr { color:var(--green); }
+  .role-name { font-size:22px; font-weight:900; margin-bottom:4px; }
+  .role-sub { font-size:13px; color:var(--gray-400); margin-bottom:20px; }
+  .role-desc { font-size:14px; color:var(--gray-300); line-height:1.7; margin-bottom:24px; }
+  .role-features { list-style:none; margin-bottom:28px; }
+  .role-features li { font-size:13px; color:var(--gray-400); padding:6px 0; display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .role-features li:last-child { border-bottom:none; }
+  .role-features .fi { width:18px; height:18px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px; flex-shrink:0; }
+  .role-features .fi.master { background:rgba(245,158,11,0.15); color:#f59e0b; }
+  .role-features .fi.rookie { background:rgba(59,130,246,0.15); color:#3b82f6; }
+  .role-features .fi.maker { background:rgba(168,85,247,0.15); color:#a855f7; }
+  .role-features .fi.mgr { background:var(--green-dim); color:var(--green); }
+  .role-btn { display:block; text-align:center; font-size:14px; font-weight:700; padding:11px 0; border-radius:8px; text-decoration:none; transition:all .2s; }
+  .role-btn.master { background:rgba(245,158,11,0.12); color:#f59e0b; border:1px solid rgba(245,158,11,0.3); }
+  .role-btn.master:hover { background:rgba(245,158,11,0.2); border-color:#f59e0b; }
+  .role-btn.rookie { background:rgba(59,130,246,0.12); color:#3b82f6; border:1px solid rgba(59,130,246,0.3); }
+  .role-btn.rookie:hover { background:rgba(59,130,246,0.2); border-color:#3b82f6; }
+  .role-btn.maker { background:rgba(168,85,247,0.12); color:#a855f7; border:1px solid rgba(168,85,247,0.3); }
+  .role-btn.maker:hover { background:rgba(168,85,247,0.2); border-color:#a855f7; }
+  .role-btn.mgr { background:var(--green-dim); color:var(--green); border:1px solid rgba(34,197,94,0.3); }
+  .role-btn.mgr:hover { background:rgba(34,197,94,0.2); border-color:var(--green); }
+
+  /* DIAGNOSIS */
+  .quiz-options { display:flex; flex-direction:column; gap:10px; }
+  .quiz-opt { background:var(--black-soft); border:1px solid var(--black-border); border-radius:10px; padding:14px 18px; color:var(--gray-300); font-size:14px; font-weight:500; text-align:left; cursor:pointer; transition:all .2s; }
+  .quiz-opt:hover { border-color:rgba(34,197,94,0.5); color:var(--white); background:rgba(34,197,94,0.06); }
+  .quiz-opt.selected { border-color:var(--green); color:var(--white); background:var(--green-dim); font-weight:700; }
+  .quiz-result-card { background:var(--black-card); border:1px solid rgba(34,197,94,0.4); border-radius:20px; padding:40px 36px; box-shadow:0 0 48px var(--green-glow); }
+  .result-badge { display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);color:var(--green-light);font-size:13px;font-weight:700;padding:6px 16px;border-radius:100px;margin-bottom:20px; }
+  .result-role-chip { display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:6px 14px;border-radius:100px;margin-right:8px;margin-bottom:8px; }
+  .result-pkg { background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:16px 20px;margin-top:16px; }
+  .result-addon-chip { display:inline-block;font-size:12px;background:var(--black-soft);border:1px solid var(--black-border);color:var(--gray-300);padding:4px 10px;border-radius:6px;margin:3px; }
+
+  /* LOGIN MODAL */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(4px); z-index:200; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--black-card); border:1px solid var(--black-border); border-radius:20px; padding:40px; width:100%; max-width:440px; position:relative; }
+  .modal-close { position:absolute; top:16px; right:20px; background:none; border:none; color:var(--gray-400); font-size:22px; cursor:pointer; }
+  .modal-close:hover { color:var(--white); }
+  .modal-tabs { display:flex; gap:0; margin-bottom:28px; background:var(--black-soft); border-radius:8px; padding:4px; }
+  .modal-tab { flex:1; padding:8px 0; text-align:center; font-size:14px; font-weight:600; color:var(--gray-400); cursor:pointer; border-radius:6px; border:none; background:none; }
+  .modal-tab.active { background:var(--black-card); color:var(--white); }
+  .modal-input { width:100%; background:var(--black-soft); border:1px solid var(--black-border); border-radius:8px; padding:12px 16px; color:var(--white); font-size:15px; margin-bottom:12px; outline:none; }
+  .modal-input:focus { border-color:var(--green); }
+  .modal-select { width:100%; background:var(--black-soft); border:1px solid var(--black-border); border-radius:8px; padding:12px 16px; color:var(--white); font-size:15px; margin-bottom:12px; outline:none; cursor:pointer; }
+  .modal-submit { width:100%; background:var(--green); color:var(--black); font-size:16px; font-weight:800; padding:14px; border-radius:8px; border:none; cursor:pointer; margin-top:4px; }
+  .modal-submit:hover { background:var(--green-light); }
+  .modal-hint { font-size:12px; color:var(--gray-500); text-align:center; margin-top:12px; line-height:1.6; }
+
+  /* HOOK / WARNING */
+  .hook-section { background:var(--black-soft); }
+  .hook-quote { font-size:clamp(20px,3vw,32px); font-weight:900; line-height:1.4; letter-spacing:-0.5px; color:var(--white); max-width:860px; margin:0 auto 32px; text-align:center; }
+  .hook-quote .red { color:#f87171; }
+  .hook-quote .green { color:var(--green); }
+  .hook-sub-list { display:flex; flex-direction:column; gap:12px; max-width:640px; margin:0 auto 40px; }
+  .hook-sub-item { display:flex; align-items:flex-start; gap:12px; font-size:15px; color:var(--gray-300); line-height:1.7; }
+  .hook-sub-item .icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+
+  /* PROOF STATS BAR */
+  .stats-bar { background:linear-gradient(135deg, rgba(34,197,94,0.08), rgba(34,197,94,0.04)); border-top:1px solid rgba(34,197,94,0.2); border-bottom:1px solid rgba(34,197,94,0.2); padding:56px 24px; }
+  .stats-bar-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:32px; max-width:1100px; margin:0 auto; text-align:center; }
+  .stat-bar-num { font-size:clamp(32px,5vw,56px); font-weight:900; color:var(--green); line-height:1; }
+  .stat-bar-label { font-size:14px; color:var(--gray-300); margin-top:8px; line-height:1.5; }
+  .stat-bar-divider { width:1px; background:var(--black-border); }
+
+  /* 4 SECRETS */
+  .secrets-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; margin-top:56px; }
+  .secret-card { background:var(--black-card); border:1px solid var(--black-border); border-radius:16px; padding:32px 28px; position:relative; overflow:hidden; transition:all .3s; }
+  .secret-card:hover { border-color:rgba(34,197,94,0.4); transform:translateY(-4px); }
+  .secret-num { font-size:64px; font-weight:900; color:rgba(34,197,94,0.07); position:absolute; top:-8px; right:16px; line-height:1; pointer-events:none; }
+  .secret-icon { font-size:32px; margin-bottom:16px; }
+  .secret-card h3 { font-size:20px; font-weight:900; margin-bottom:12px; }
+  .secret-card p { font-size:14px; color:var(--gray-300); line-height:1.7; }
+
+  /* COMPETITOR COMPARISON */
+  .compare-section { background:var(--black-soft); }
+  .compare-table { width:100%; border-collapse:collapse; margin-top:48px; border-radius:16px; overflow:hidden; }
+  .compare-table th { padding:16px 20px; font-size:14px; font-weight:800; text-align:center; }
+  .compare-table th.col-them { background:rgba(239,68,68,0.1); color:#f87171; border-bottom:2px solid rgba(239,68,68,0.3); }
+  .compare-table th.col-us { background:var(--green-dim); color:var(--green); border-bottom:2px solid rgba(34,197,94,0.4); }
+  .compare-table th.col-label { background:var(--black-card); color:var(--gray-400); text-align:left; border-bottom:2px solid var(--black-border); }
+  .compare-table td { padding:14px 20px; font-size:14px; text-align:center; border-bottom:1px solid var(--black-border); }
+  .compare-table td.col-label { text-align:left; color:var(--gray-300); font-weight:600; background:var(--black-card); }
+  .compare-table td.col-them { background:rgba(239,68,68,0.04); color:#fca5a5; }
+  .compare-table td.col-us { background:rgba(34,197,94,0.04); color:var(--green-light); font-weight:700; }
+  .compare-table tr:last-child td { border-bottom:none; }
+  .badge-bad { background:rgba(239,68,68,0.15); color:#f87171; font-size:12px; font-weight:700; padding:3px 10px; border-radius:100px; white-space:nowrap; }
+  .badge-good { background:var(--green-dim); color:var(--green); font-size:12px; font-weight:700; padding:3px 10px; border-radius:100px; white-space:nowrap; }
+
+  /* WARNING */
+  .warning-section { background:var(--black); }
+  .warning-box { border:1px solid rgba(239,68,68,0.3); background:rgba(239,68,68,0.04); border-radius:16px; padding:36px 32px; max-width:880px; margin:0 auto 48px; }
+  .warning-title { font-size:clamp(18px,2.5vw,24px); font-weight:900; color:#f87171; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+  .warning-list { display:flex; flex-direction:column; gap:10px; }
+  .warning-item { display:flex; align-items:flex-start; gap:10px; font-size:14px; color:var(--gray-300); line-height:1.6; }
+  .warning-item::before { content:'⚠️'; flex-shrink:0; }
+
+  /* MARKETING CHANNELS */
+  .channels-grid { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:40px; }
+  .channel-chip { display:flex; align-items:center; gap:8px; background:var(--black-card); border:1px solid var(--black-border); border-radius:100px; padding:10px 20px; font-size:14px; font-weight:600; color:var(--white); transition:all .3s; }
+  .channel-chip:hover { border-color:var(--green); color:var(--green); transform:translateY(-2px); }
+  .channel-chip .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+  /* EXCLUSIVITY */
+  .excl-section { text-align:center; position:relative; overflow:hidden; }
+  .excl-box { max-width:800px; margin:0 auto; }
+  .excl-quote { font-size:clamp(22px,3.5vw,40px); font-weight:900; letter-spacing:-1px; line-height:1.3; margin-bottom:24px; }
+  .excl-quote .accent { color:var(--green); }
+  .excl-criteria { display:flex; flex-direction:column; gap:12px; max-width:560px; margin:32px auto; }
+  .excl-item { display:flex; align-items:center; gap:12px; background:var(--black-card); border:1px solid var(--black-border); border-radius:10px; padding:14px 20px; text-align:left; }
+  .excl-item .check { color:var(--green); font-size:18px; flex-shrink:0; }
+  .excl-item span { font-size:14px; color:var(--gray-300); line-height:1.5; }
+
+  /* Responsive */
+  @media(max-width:768px) {
+    .nav-links { display:none; }
+    .footer-top { grid-template-columns:1fr; gap:24px; }
+    .hero-stats { gap:24px; }
+    .pricing-grid { grid-template-columns:1fr; }
+    .roles-grid { grid-template-columns:1fr; }
+    #contact .section-inner > div { grid-template-columns:1fr !important; }
+    .compare-table { font-size:12px; }
+    .compare-table th, .compare-table td { padding:10px 12px; }
+    .stat-bar-divider { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#22c55e"/><text x="16" y="23" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" text-anchor="middle" fill="#000">S</text></svg>
+      스타터<span>즈</span>
+    </a>
+    <div class="nav-links">
+      <a href="#services">서비스</a>
+      <a href="#process">진행 단계</a>
+      <a href="#platform">플랫폼</a>
+      <a href="#pricing">요금제</a>
+      <a href="#diagnosis">자가진단</a>
+      <a href="#experts">전문가</a>
+      <a href="#franchises">프랜차이즈</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button onclick="openModal()" class="nav-cta" style="cursor:pointer;border:none;">플랫폼 로그인</button>
+      <a class="nav-cta" href="#contact" style="background:transparent;border:1px solid var(--black-border);color:var(--gray-300);">무료 상담</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      대한민국 No.1 프랜차이즈 확장 플랫폼
+    </div>
+    <h1>당신의 브랜드를<br><span class="highlight">프랜차이즈</span>로 만들어드립니다</h1>
+    <p class="hero-sub">독창적인 아이템을 보유한 소상공인·소기업이 전국·전세계 프랜차이즈로 도약할 수 있도록<br>사업성 분석부터 점주 매칭까지 원스톱으로 지원합니다.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openModal()" style="border:none;cursor:pointer;">플랫폼 무료 시작하기</button>
+      <a class="btn-outline" href="#platform">역할별 기능 보기</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">340+</div>
+        <div class="stat-label">성공 사례</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">고객 만족도</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1,200+</div>
+        <div class="stat-label">개설 가맹점</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">15년</div>
+        <div class="stat-label">평균 전문가 경력</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">WHY STARTERS</div>
+      <h2 class="section-title">혼자 하기엔 너무나 복잡한<br>프랜차이즈 창업의 현실</h2>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">📋</div>
+        <h3>정보공개서·계약서 작성의 벽</h3>
+        <p>공정거래위원회 등록 의무 서류 작성에만 평균 6~12개월 소요. 법률 전문가 없이는 불가능에 가깝습니다.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">💸</div>
+        <h3>막대한 초기 컨설팅 비용</h3>
+        <p>대형 컨설팅사 의뢰 시 3천만~1억 원대 비용 발생. 소상공인이 접근하기 어려운 구조였습니다.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🔍</div>
+        <h3>적합한 점주를 찾기 어려움</h3>
+        <p>가맹점 모집부터 검증·매칭까지 체계 없이 진행되어 부적합한 점주와의 계약으로 분쟁 발생이 잦습니다.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">⚙️</div>
+        <h3>운영 시스템 구축의 어려움</h3>
+        <p>교육 매뉴얼, SOP, 본사 운영 체계 등 프랜차이즈 시스템 전반을 처음부터 구축하는 것은 전문 지식 없이 불가능합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOOK QUESTION -->
+<section id="hook" class="hook-section">
+  <div class="section-inner text-center">
+    <div class="section-badge">BEFORE YOU DECIDE</div>
+    <p class="hook-quote" style="margin-top:24px;">
+      "<span class="red">본인 프랜차이즈 성공 경험도 없는 곳</span>에서<br>
+      어떻게 대표님의 소중한 브랜드를 맡기실 건가요?"
+    </p>
+    <p style="font-size:17px;color:var(--gray-400);max-width:620px;margin:0 auto 40px;line-height:1.8;">
+      시장에는 수많은 프랜차이즈 컨설팅 업체가 있습니다.<br>
+      하지만 대부분은 <strong style="color:#f87171;">이론만 아는 컨설턴트</strong>가 서류만 대신 써 드립니다.
+    </p>
+    <div class="hook-sub-list" style="text-align:left;">
+      <div class="hook-sub-item"><span class="icon">❌</span>직영점 운영 경험 없이 "프랜차이즈 전문가"를 자처하는 업체</div>
+      <div class="hook-sub-item"><span class="icon">❌</span>계약서 작성만 해주고 가맹점 모집·운영은 나 몰라라 하는 업체</div>
+      <div class="hook-sub-item"><span class="icon">❌</span>2~3년 장기 계약 + 최대 3,000만원 위약금 조항으로 발목을 잡는 업체</div>
+      <div class="hook-sub-item"><span class="icon">❌</span>단계별 성과 없이 선불 비용만 받고 책임지지 않는 업체</div>
+    </div>
+    <div style="background:var(--green-dim);border:1px solid rgba(34,197,94,0.4);border-radius:16px;padding:28px 32px;max-width:720px;margin:0 auto;">
+      <div style="font-size:18px;font-weight:900;margin-bottom:8px;">스타터즈는 다릅니다.</div>
+      <p style="font-size:15px;color:var(--gray-300);line-height:1.8;">
+        스타터즈 팀원 전원이 <strong style="color:var(--green)">직접 프랜차이즈를 구축하고 성공시킨 경험자</strong>입니다.<br>
+        내 일처럼 대표님의 브랜드에 집요하게 달려드는 것, 그게 우리가 일하는 방식입니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">SERVICES</div>
+      <h2 class="section-title">4대 핵심 서비스 영역</h2>
+      <p class="section-desc">스타터즈는 프랜차이즈 확장에 필요한 모든 과정을 전담 전문가팀과 함께 원스톱으로 진행합니다.</p>
+    </div>
+    <div class="services-grid">
+      <!-- 사업성 분석 SVG -->
+      <div class="service-card">
+        <svg class="service-svg" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <rect width="72" height="72" rx="14" fill="rgba(34,197,94,0.08)"/>
+          <rect x="10" y="42" width="12" height="18" rx="2" fill="#22c55e" opacity=".4"/>
+          <rect x="26" y="30" width="12" height="30" rx="2" fill="#22c55e" opacity=".7"/>
+          <rect x="42" y="20" width="12" height="40" rx="2" fill="#22c55e"/>
+          <polyline points="16,40 32,28 48,18" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="48" cy="18" r="3.5" fill="#4ade80"/>
+          <circle cx="32" cy="28" r="3" fill="#22c55e"/>
+          <circle cx="16" cy="40" r="3" fill="#22c55e"/>
+        </svg>
+        <h3>사업성 분석</h3>
+        <p>시장 규모·경쟁 현황·입지 분석·수익성 시뮬레이션을 통해 프랜차이즈 확장 가능성을 정밀하게 진단합니다.</p>
+        <ul class="service-list">
+          <li>상권·시장 분석 리포트</li>
+          <li>손익분기점·ROI 시뮬레이션</li>
+          <li>경쟁사 벤치마킹 분석</li>
+          <li>프랜차이즈 적합성 진단</li>
+          <li>성장 전략 로드맵 수립</li>
+        </ul>
+      </div>
+      <!-- 브랜드 패키징 SVG -->
+      <div class="service-card">
+        <svg class="service-svg" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <rect width="72" height="72" rx="14" fill="rgba(34,197,94,0.08)"/>
+          <circle cx="36" cy="32" r="16" fill="none" stroke="#22c55e" stroke-width="2" opacity=".3"/>
+          <circle cx="36" cy="32" r="10" fill="none" stroke="#22c55e" stroke-width="2" opacity=".6"/>
+          <circle cx="36" cy="32" r="5" fill="#22c55e"/>
+          <rect x="28" y="52" width="16" height="4" rx="2" fill="#22c55e" opacity=".5"/>
+          <rect x="24" y="58" width="24" height="3" rx="1.5" fill="#22c55e" opacity=".3"/>
+          <line x1="36" y1="16" x2="36" y2="10" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+          <line x1="50" y1="22" x2="54" y2="18" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+          <line x1="52" y1="32" x2="58" y2="32" stroke="#4ade80" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <h3>브랜드 패키징</h3>
+        <p>CI/BI 개발부터 메뉴 표준화, 인테리어 가이드라인까지 가맹 확장에 최적화된 브랜드 패키지를 구축합니다.</p>
+        <ul class="service-list">
+          <li>CI/BI 디자인 시스템 개발</li>
+          <li>메뉴·상품 표준화 매뉴얼</li>
+          <li>인테리어·사인 가이드라인</li>
+          <li>브랜드 스토리텔링 개발</li>
+          <li>패키지 디자인·유니폼 기획</li>
+        </ul>
+      </div>
+      <!-- 법률 검토 SVG -->
+      <div class="service-card">
+        <svg class="service-svg" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <rect width="72" height="72" rx="14" fill="rgba(34,197,94,0.08)"/>
+          <rect x="20" y="14" width="32" height="40" rx="4" fill="none" stroke="#22c55e" stroke-width="2" opacity=".5"/>
+          <rect x="20" y="14" width="32" height="40" rx="4" fill="rgba(34,197,94,0.06)"/>
+          <line x1="28" y1="26" x2="44" y2="26" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+          <line x1="28" y1="34" x2="44" y2="34" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+          <line x1="28" y1="42" x2="38" y2="42" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+          <circle cx="50" cy="50" r="10" fill="#0a0a0a" stroke="#22c55e" stroke-width="2"/>
+          <polyline points="45,50 48,53 55,46" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3>법률 검토</h3>
+        <p>공정거래위원회 정보공개서 등록, 가맹계약서 작성, 상표권 등록까지 법률 전문가가 완벽하게 처리합니다.</p>
+        <ul class="service-list">
+          <li>정보공개서 작성·등록 대행</li>
+          <li>가맹계약서·부속계약서 작성</li>
+          <li>상표권·특허 등록 지원</li>
+          <li>분쟁 예방 법률 자문</li>
+          <li>공정위 서류 심사 대응</li>
+        </ul>
+      </div>
+      <!-- 마케팅 전략 SVG -->
+      <div class="service-card">
+        <svg class="service-svg" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <rect width="72" height="72" rx="14" fill="rgba(34,197,94,0.08)"/>
+          <path d="M14 36 C14 24 22 16 36 14 C50 12 58 22 58 36" fill="none" stroke="#22c55e" stroke-width="2" opacity=".3"/>
+          <path d="M20 40 C20 30 27 22 36 20 C45 18 52 26 52 40" fill="none" stroke="#22c55e" stroke-width="2" opacity=".5"/>
+          <circle cx="36" cy="42" r="8" fill="none" stroke="#22c55e" stroke-width="2"/>
+          <circle cx="36" cy="42" r="3" fill="#22c55e"/>
+          <line x1="36" y1="34" x2="36" y2="14" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-dasharray="3,3"/>
+          <circle cx="22" cy="52" r="4" fill="#22c55e" opacity=".4"/>
+          <circle cx="50" cy="52" r="4" fill="#22c55e" opacity=".4"/>
+          <line x1="22" y1="52" x2="50" y2="52" stroke="#22c55e" stroke-width="1.5" opacity=".3"/>
+        </svg>
+        <h3>마케팅 전략</h3>
+        <p>가맹점 모집 광고부터 브랜드 인지도 제고, SNS 마케팅, PR까지 검증된 마케팅 전략으로 빠른 확장을 지원합니다.</p>
+        <ul class="service-list">
+          <li>가맹점 모집 광고 기획·집행</li>
+          <li>디지털 마케팅·SNS 운영</li>
+          <li>언론·PR 보도자료 배포</li>
+          <li>박람회·설명회 기획·참가</li>
+          <li>점주 유치 랜딩페이지 제작</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="process">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">HOW IT WORKS</div>
+      <h2 class="section-title">단계별 프랜차이즈 구축 프로세스</h2>
+      <p class="section-desc">검증된 3단계 방법론으로 당신의 브랜드를 체계적인 프랜차이즈로 전환합니다.</p>
+    </div>
+
+    <div class="stages" style="margin-top:56px;">
+      <!-- A단계 -->
+      <div>
+        <div class="stage-header">
+          <div class="stage-num">A</div>
+          <div>
+            <div class="stage-title">브랜드 파운데이션</div>
+            <div class="stage-subtitle">프랜차이즈 확장을 위한 브랜드 기반 구축</div>
+          </div>
+        </div>
+        <div class="stage-items">
+          <div class="stage-item">
+            <h4>사업성 분석</h4>
+            <p>시장조사, 경쟁사 분석, 수익성 검토 및 프랜차이즈 가능성 종합 진단</p>
+          </div>
+          <div class="stage-item">
+            <h4>BI·CI 개발</h4>
+            <p>브랜드 아이덴티티·컬러시스템·서체·로고 등 일관된 비주얼 가이드 제작</p>
+          </div>
+          <div class="stage-item">
+            <h4>메뉴·상품 표준화</h4>
+            <p>레시피·원가·품질 기준 표준화 및 가맹 전용 메뉴 개발·조정</p>
+          </div>
+          <div class="stage-item">
+            <h4>SOP 매뉴얼 제작</h4>
+            <p>오픈·운영·마감·위생·CS 전반에 걸친 표준 운영 절차서 작성</p>
+          </div>
+          <div class="stage-item">
+            <h4>직원 교육 프로그램</h4>
+            <p>가맹점 교육 커리큘럼·교재·평가 기준 개발 및 교육 시뮬레이션</p>
+          </div>
+          <div class="stage-item">
+            <h4>원가·수익 분석</h4>
+            <p>본사·가맹점 양측 수익 구조 설계 및 로열티·교육비 책정 기준 수립</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">↓</div>
+
+      <!-- B단계 -->
+      <div>
+        <div class="stage-header">
+          <div class="stage-num" style="background:var(--green-dark)">B</div>
+          <div>
+            <div class="stage-title">프랜차이즈 시스템 빌드</div>
+            <div class="stage-subtitle">가맹 사업 운영에 필요한 법적·시스템적 기반 완성</div>
+          </div>
+        </div>
+        <div class="stage-items">
+          <div class="stage-item">
+            <h4>정보공개서 작성·등록</h4>
+            <p>공정거래위원회 가맹사업법 기준의 정보공개서 작성 및 등록 대행 일체</p>
+          </div>
+          <div class="stage-item">
+            <h4>가맹계약서 작성</h4>
+            <p>가맹계약서·부속계약서·서약서 등 법적 효력을 갖춘 계약 서류 완성</p>
+          </div>
+          <div class="stage-item">
+            <h4>교육 시스템 구축</h4>
+            <p>가맹 예비·기초·보수 교육 프로그램 체계화 및 LMS 기반 온라인 교육 기획</p>
+          </div>
+          <div class="stage-item">
+            <h4>가맹 관리 매뉴얼</h4>
+            <p>슈퍼바이저 업무 매뉴얼, 가맹점 관리 지침, QSC 기준서 작성</p>
+          </div>
+          <div class="stage-item">
+            <h4>본사 운영 체계</h4>
+            <p>식자재 공급망, 물류 체계, 본사 조직도·업무 분장·채용 계획 수립</p>
+          </div>
+          <div class="stage-item">
+            <h4>상표권·IP 등록</h4>
+            <p>브랜드명·로고·메뉴명 상표 등록 대행 및 지식재산권 보호 전략 수립</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">↓</div>
+
+      <!-- C단계 -->
+      <div>
+        <div class="stage-header">
+          <div class="stage-num" style="background:#15803d">C</div>
+          <div>
+            <div class="stage-title">확장·매칭·개설</div>
+            <div class="stage-subtitle">가맹점 모집부터 개점까지 전 과정 실행 지원</div>
+          </div>
+        </div>
+        <div class="stage-items">
+          <div class="stage-item">
+            <h4>가맹점 모집 마케팅</h4>
+            <p>온·오프라인 가맹점 모집 광고 기획 및 집행, 박람회 참가 지원</p>
+          </div>
+          <div class="stage-item">
+            <h4>점주 검증·매칭</h4>
+            <p>예비 점주 인터뷰·자금·역량 검증 및 적합 점주 1:1 매칭 서비스</p>
+          </div>
+          <div class="stage-item">
+            <h4>상권 분석·입지 선정</h4>
+            <p>빅데이터 기반 상권 분석 및 개점 예정지 입지 적합성 진단</p>
+          </div>
+          <div class="stage-item">
+            <h4>개점 지원</h4>
+            <p>인테리어 감리, 기기·집기 발주, 식자재 발주 시스템 구축, 오픈 지원</p>
+          </div>
+          <div class="stage-item">
+            <h4>슈퍼바이징 체계</h4>
+            <p>개점 후 정기 방문 관리, 매출 분석, QSC 점검, 클레임 대응 체계 구축</p>
+          </div>
+          <div class="stage-item">
+            <h4>지속 성장 지원</h4>
+            <p>연간 마케팅 캘린더, 신메뉴 개발 지원, 가맹점 커뮤니티 운영 지원</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-grid">
+    <div>
+      <div class="stat-bar-num" id="cnt1">0</div>
+      <div class="stat-bar-label">0호점 → 100호점<br>달성 최단 기간</div>
+    </div>
+    <div>
+      <div class="stat-bar-num" id="cnt2">0%</div>
+      <div class="stat-bar-label">파트너사<br>재계약률</div>
+    </div>
+    <div>
+      <div class="stat-bar-num" id="cnt3">0%</div>
+      <div class="stat-bar-label">5년 내 가맹점<br>폐업률 (업계 평균 30%)</div>
+    </div>
+    <div>
+      <div class="stat-bar-num" id="cnt4">0배</div>
+      <div class="stat-bar-label">컨설팅 후<br>가맹 문의 평균 증가</div>
+    </div>
+    <div>
+      <div class="stat-bar-num" id="cnt5">0+</div>
+      <div class="stat-bar-label">누적 컨설팅<br>브랜드 수</div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORM ROLES -->
+<section id="platform">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">PLATFORM</div>
+      <h2 class="section-title">역할에 맞는 전용 대시보드</h2>
+      <p class="section-desc">스타터즈 플랫폼은 가맹주·점주·인큐베이팅 점주·관리자 4가지 역할로 운영됩니다.<br>각자의 역할에 최적화된 전용 대시보드로 모든 업무를 한 곳에서 처리하세요.</p>
+    </div>
+
+    <div class="roles-grid">
+
+      <!-- 스타마스터 -->
+      <div class="role-card master">
+        <div class="role-icon master">👑</div>
+        <div class="role-title master">STAR MASTER</div>
+        <div class="role-name">스타마스터</div>
+        <div class="role-sub">가맹주 · 프랜차이즈 본사</div>
+        <div class="role-desc">브랜드 오너로서 프랜차이즈를 등록·관리하고, 들어오는 가맹 신청을 검토·승인합니다. 인큐베이팅 프로그램 운영까지 전담합니다.</div>
+        <ul class="role-features">
+          <li><span class="fi master">🏪</span>프랜차이즈 등록 및 정보 관리</li>
+          <li><span class="fi master">📋</span>가맹 신청 수신·검토·승인/거절</li>
+          <li><span class="fi master">🚀</span>인큐베이팅 프로그램 승인 및 관리</li>
+          <li><span class="fi master">📊</span>프랜차이즈별 신청 현황 통계</li>
+          <li><span class="fi master">🔔</span>신규 신청 실시간 알림</li>
+        </ul>
+        <a class="role-btn master" href="javascript:void(0)" onclick="window.open((location.protocol==='file:'||location.hostname==='localhost'?'http://localhost:5173':location.origin)+'/login','_blank')">스타마스터로 시작 →</a>
+      </div>
+
+      <!-- 스타루키 -->
+      <div class="role-card rookie">
+        <div class="role-icon rookie">⭐</div>
+        <div class="role-title rookie">STAR ROOKIE</div>
+        <div class="role-name">스타루키</div>
+        <div class="role-sub">예비 점주 · 가맹 창업 희망자</div>
+        <div class="role-desc">전국 프랜차이즈 브랜드를 탐색하고 가맹 신청을 제출합니다. 신청 상태를 실시간으로 확인하고 가맹주와 소통합니다.</div>
+        <ul class="role-features">
+          <li><span class="fi rookie">🔍</span>전국 프랜차이즈 목록 탐색·필터</li>
+          <li><span class="fi rookie">📄</span>가맹 신청서 작성 및 제출</li>
+          <li><span class="fi rookie">⏳</span>신청 상태 실시간 추적</li>
+          <li><span class="fi rookie">💰</span>창업비용·예상 월매출 정보 확인</li>
+          <li><span class="fi rookie">🔔</span>신청 상태 변경 알림 수신</li>
+        </ul>
+        <a class="role-btn rookie" href="javascript:void(0)" onclick="window.open((location.protocol==='file:'||location.hostname==='localhost'?'http://localhost:5173':location.origin)+'/login','_blank')">스타루키로 시작 →</a>
+      </div>
+
+      <!-- 스타메이커 -->
+      <div class="role-card maker">
+        <div class="role-icon maker">🚀</div>
+        <div class="role-title maker">STAR MAKER</div>
+        <div class="role-name">스타메이커</div>
+        <div class="role-sub">인큐베이팅 점주 · 브랜드 파트너</div>
+        <div class="role-desc">인큐베이팅 프로그램을 통해 가맹주와 함께 성장합니다. 마일스톤 기반으로 진행 현황을 체계적으로 관리하고 목표를 달성합니다.</div>
+        <ul class="role-features">
+          <li><span class="fi maker">📊</span>인큐베이팅 프로그램 진행률 확인</li>
+          <li><span class="fi maker">✅</span>마일스톤 체크 및 완료 처리</li>
+          <li><span class="fi maker">📅</span>프로그램 일정·종료일 D-day 표시</li>
+          <li><span class="fi maker">📝</span>가맹주 메모·피드백 확인</li>
+          <li><span class="fi maker">🚀</span>단계별 성과 지표 트래킹</li>
+        </ul>
+        <a class="role-btn maker" href="javascript:void(0)" onclick="window.open((location.protocol==='file:'||location.hostname==='localhost'?'http://localhost:5173':location.origin)+'/login','_blank')">스타메이커로 시작 →</a>
+      </div>
+
+    </div>
+
+    <!-- Platform CTA -->
+    <div style="text-align:center;margin-top:48px;">
+      <button onclick="openModal()" class="btn-primary" style="font-size:16px;padding:16px 40px;border:none;cursor:pointer;">플랫폼 시작하기 — 무료 가입</button>
+      <p style="font-size:13px;color:var(--gray-500);margin-top:12px;">이미 계정이 있으신가요? <button onclick="openModal('login')" style="background:none;border:none;color:var(--green);cursor:pointer;font-size:13px;font-weight:600;">로그인 →</button></p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">PRICING</div>
+      <h2 class="section-title">투명한 요금 체계</h2>
+      <p class="section-desc">대형 컨설팅사 대비 1/5 비용으로 동일하거나 더 높은 수준의 전문 서비스를 제공합니다.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- A단계 -->
+      <div class="pricing-card">
+        <div class="pricing-stage">A STAGE</div>
+        <div class="pricing-name">브랜드 파운데이션</div>
+        <div class="pricing-desc">프랜차이즈 확장을 준비하는 브랜드를 위한 기초 구축 패키지. 사업성 분석부터 SOP 매뉴얼까지 일체 포함.</div>
+        <div class="pricing-price">
+          <span class="amount">4,900,000</span><span class="unit">원</span>
+        </div>
+        <div class="pricing-extra">VAT 별도 · 분납 가능</div>
+        <div class="pricing-divider"></div>
+        <div style="font-size:13px;color:var(--gray-400);font-weight:700;margin-bottom:12px;">패키지 포함 항목</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span>사업성 분석 및 시장조사 리포트</li>
+          <li><span class="check">✓</span>CI/BI 브랜드 아이덴티티 개발</li>
+          <li><span class="check">✓</span>메뉴·상품 표준화 매뉴얼 작성</li>
+          <li><span class="check">✓</span>표준 SOP 운영 매뉴얼 제작</li>
+          <li><span class="check">✓</span>직원 교육 프로그램 설계</li>
+          <li><span class="check">✓</span>원가·수익 구조 분석 보고서</li>
+          <li><span class="check">✓</span>전담 컨설턴트 배정 (3개월)</li>
+        </ul>
+        <div class="pricing-divider"></div>
+        <div class="pricing-options">
+          <button class="addon-toggle" onclick="toggleAddon(this)">
+            <span>➕ ADD-ON 옵션 보기 (별도)</span>
+            <span class="addon-toggle-icon">+</span>
+          </button>
+          <div class="addon-body">
+            <div style="padding:12px 0 4px;">
+              <div class="option-item"><span>인테리어 가이드라인 제작</span><span class="option-price">2,200,000원~</span></div>
+              <div class="option-item"><span>상권 분석 추가 지역 (1곳)</span><span class="option-price">550,000원</span></div>
+              <div class="option-item"><span>메뉴 사진·영상 촬영</span><span class="option-price">1,500,000원~</span></div>
+              <div class="option-item"><span>브랜드 스토리 영상 제작</span><span class="option-price">3,300,000원~</span></div>
+              <div class="option-item"><span>경쟁 브랜드 심층 분석</span><span class="option-price">990,000원</span></div>
+            </div>
+          </div>
+        </div>
+        <a class="pricing-btn outline" href="#contact">A단계 시작하기</a>
+      </div>
+
+      <!-- B단계 (featured) -->
+      <div class="pricing-card featured">
+        <div class="pricing-popular">가장 인기 있는 플랜</div>
+        <div class="pricing-stage">B STAGE</div>
+        <div class="pricing-name">프랜차이즈 시스템 빌드</div>
+        <div class="pricing-desc">A단계 이후 법적·운영 시스템 완성. 정보공개서 등록부터 본사 운영 체계까지 가맹 사업 전면 준비 완료.</div>
+        <div class="pricing-price">
+          <span class="amount">9,900,000</span><span class="unit">원</span>
+        </div>
+        <div class="pricing-extra">VAT 별도 · A+B 통합 패키지 시 10% 할인</div>
+        <div class="pricing-divider"></div>
+        <div style="font-size:13px;color:var(--gray-400);font-weight:700;margin-bottom:12px;">패키지 포함 항목</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span>공정위 정보공개서 작성·등록 대행</li>
+          <li><span class="check">✓</span>가맹계약서·부속계약서 일체 작성</li>
+          <li><span class="check">✓</span>가맹점 교육 시스템 구축 (LMS 포함)</li>
+          <li><span class="check">✓</span>슈퍼바이저·가맹 관리 매뉴얼</li>
+          <li><span class="check">✓</span>본사 운영 체계·조직도 수립</li>
+          <li><span class="check">✓</span>상표권 등록 (1건 포함)</li>
+          <li><span class="check">✓</span>법률 자문 변호사 검토 포함</li>
+          <li><span class="check">✓</span>전담 PM 배정 (6개월)</li>
+        </ul>
+        <div class="pricing-divider"></div>
+        <div class="pricing-options">
+          <button class="addon-toggle" onclick="toggleAddon(this)">
+            <span>➕ ADD-ON 옵션 보기 (별도)</span>
+            <span class="addon-toggle-icon">+</span>
+          </button>
+          <div class="addon-body">
+            <div style="padding:12px 0 4px;">
+              <div class="option-item"><span>상표권 추가 등록 (건당)</span><span class="option-price">660,000원</span></div>
+              <div class="option-item"><span>법인 설립 대행</span><span class="option-price">1,100,000원</span></div>
+              <div class="option-item"><span>POS·키오스크 시스템 구축</span><span class="option-price">3,300,000원~</span></div>
+              <div class="option-item"><span>식자재 공급 계약 중개</span><span class="option-price">별도 협의</span></div>
+              <div class="option-item"><span>프랜차이즈 전산 관리 시스템</span><span class="option-price">5,500,000원~</span></div>
+            </div>
+          </div>
+        </div>
+        <a class="pricing-btn" href="#contact">B단계 시작하기</a>
+      </div>
+
+      <!-- C단계 -->
+      <div class="pricing-card">
+        <div class="pricing-stage">C STAGE</div>
+        <div class="pricing-name">확장·매칭·개설</div>
+        <div class="pricing-desc">시스템이 갖춰진 브랜드의 실제 가맹점 모집과 개설을 책임지는 결과 기반 파트너십 플랜.</div>
+        <div class="pricing-price">
+          <span class="amount">5,000,000</span><span class="unit">원</span>
+        </div>
+        <div class="pricing-extra">+ 프랜차이즈 계약 성사당 5% 성과 보수</div>
+        <div class="pricing-divider"></div>
+        <div style="font-size:13px;color:var(--gray-400);font-weight:700;margin-bottom:12px;">패키지 포함 항목</div>
+        <ul class="pricing-features">
+          <li><span class="check">✓</span>가맹점 모집 마케팅 기획·집행</li>
+          <li><span class="check">✓</span>예비 점주 검증·인터뷰·매칭</li>
+          <li><span class="check">✓</span>상권 분석 및 입지 선정 지원</li>
+          <li><span class="check">✓</span>개점 준비·인테리어 감리 지원</li>
+          <li><span class="check">✓</span>가맹 계약 체결 법률 지원</li>
+          <li><span class="check">✓</span>개점 후 1개월 슈퍼바이징</li>
+          <li><span class="check">✓</span>전담 MD 배정 (계약기간 동안)</li>
+        </ul>
+        <div class="pricing-divider"></div>
+        <div class="pricing-options">
+          <button class="addon-toggle" onclick="toggleAddon(this)">
+            <span>➕ ADD-ON 옵션 보기 (별도)</span>
+            <span class="addon-toggle-icon">+</span>
+          </button>
+          <div class="addon-body">
+            <div style="padding:12px 0 4px;">
+              <div class="option-item"><span>박람회 부스 참가 대행</span><span class="option-price">4,400,000원~</span></div>
+              <div class="option-item"><span>가맹점 모집 영상 광고 제작</span><span class="option-price">3,300,000원~</span></div>
+              <div class="option-item"><span>SNS 채널 운영 대행 (월)</span><span class="option-price">990,000원/월</span></div>
+              <div class="option-item"><span>개점 홍보 이벤트 기획</span><span class="option-price">1,650,000원~</span></div>
+              <div class="option-item"><span>슈퍼바이징 연장 (월)</span><span class="option-price">550,000원/월</span></div>
+            </div>
+          </div>
+        </div>
+        <a class="pricing-btn outline" href="#contact">C단계 시작하기</a>
+      </div>
+
+    </div>
+
+    <!-- A+B+C 풀패키지 -->
+    <div style="background:linear-gradient(135deg, var(--black-card), rgba(34,197,94,0.08)); border:1px solid rgba(34,197,94,0.4); border-radius:20px; padding:40px 36px; margin-top:28px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px;">
+      <div>
+        <div style="font-size:12px;color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:8px;">FULL PACKAGE</div>
+        <div style="font-size:24px;font-weight:900;margin-bottom:8px;">A+B+C 전체 과정 통합 패키지</div>
+        <div style="font-size:15px;color:var(--gray-300);line-height:1.7;">창업부터 확장까지 전 단계를 하나의 팀이 일관되게 진행.<br>단계별 전환 공백 없이 브랜드 성장에만 집중하세요.</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:14px;color:var(--gray-400);text-decoration:line-through;margin-bottom:4px;">정상가 19,800,000원</div>
+        <div style="font-size:40px;font-weight:900;color:var(--green);">17,800,000<span style="font-size:18px;font-weight:600;">원</span></div>
+        <div style="font-size:13px;color:var(--gray-400);margin-bottom:16px;">+ 계약 성사당 5% · VAT 별도</div>
+        <a class="btn-primary" href="#contact" style="display:inline-block;">통합 패키지 문의하기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTS -->
+<section id="experts" class="experts">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">OUR EXPERTS</div>
+      <h2 class="section-title">검증된 전문가팀</h2>
+      <p class="section-desc">스타터즈는 각 분야 평균 15년 이상 경력의 전문가로 구성된 전담팀이 처음부터 끝까지 함께합니다.</p>
+    </div>
+    <div class="experts-grid">
+      <div class="expert-card">
+        <div class="expert-avatar">김</div>
+        <div class="expert-name">김재원</div>
+        <div class="expert-title">수석 프랜차이즈 컨설턴트</div>
+        <div class="expert-career">前 CJ푸드빌 가맹사업부 임원 · 20년+ 프랜차이즈 전략 수립 경력 · 총 200여 개 브랜드 컨설팅</div>
+        <div class="expert-tags">
+          <span class="expert-tag">사업 전략</span>
+          <span class="expert-tag">가맹 운영</span>
+          <span class="expert-tag">수익 구조</span>
+        </div>
+      </div>
+      <div class="expert-card">
+        <div class="expert-avatar">이</div>
+        <div class="expert-name">이수진</div>
+        <div class="expert-title">브랜드 디렉터</div>
+        <div class="expert-career">前 스타벅스코리아 브랜드팀 · 홍익대학교 시각디자인 석사 · CI/BI 구축 120개 브랜드</div>
+        <div class="expert-tags">
+          <span class="expert-tag">CI·BI 개발</span>
+          <span class="expert-tag">브랜딩</span>
+          <span class="expert-tag">패키지 디자인</span>
+        </div>
+      </div>
+      <div class="expert-card">
+        <div class="expert-avatar">박</div>
+        <div class="expert-name">박성훈</div>
+        <div class="expert-title">법무 전문위원</div>
+        <div class="expert-career">법무법인 프랜차이즈 전문 파트너 변호사 · 공정거래위원회 자문위원 · 가맹사업법 전공</div>
+        <div class="expert-tags">
+          <span class="expert-tag">정보공개서</span>
+          <span class="expert-tag">가맹계약</span>
+          <span class="expert-tag">상표권</span>
+        </div>
+      </div>
+      <div class="expert-card">
+        <div class="expert-avatar">최</div>
+        <div class="expert-name">최은영</div>
+        <div class="expert-title">마케팅 전략가</div>
+        <div class="expert-career">前 배달의민족 파트너사업팀 · 디지털 마케팅·가맹 모집 전문 · 누적 가맹 모집 700건+</div>
+        <div class="expert-tags">
+          <span class="expert-tag">디지털 마케팅</span>
+          <span class="expert-tag">가맹 모집</span>
+          <span class="expert-tag">SNS 전략</span>
+        </div>
+      </div>
+      <div class="expert-card">
+        <div class="expert-avatar">정</div>
+        <div class="expert-name">정민준</div>
+        <div class="expert-title">상권·입지 분석가</div>
+        <div class="expert-career">前 롯데자산개발 MD팀 · 빅데이터 기반 상권분석 전문 · 적합 입지 선정 성공률 96%</div>
+        <div class="expert-tags">
+          <span class="expert-tag">상권 분석</span>
+          <span class="expert-tag">입지 선정</span>
+          <span class="expert-tag">부동산</span>
+        </div>
+      </div>
+      <div class="expert-card">
+        <div class="expert-avatar">한</div>
+        <div class="expert-name">한지영</div>
+        <div class="expert-title">F&B 품질 전문가</div>
+        <div class="expert-career">前 파리바게뜨 R&D센터 · 메뉴 표준화·원가 최적화 전문 · 식품기술사 자격 보유</div>
+        <div class="expert-tags">
+          <span class="expert-tag">메뉴 개발</span>
+          <span class="expert-tag">원가 분석</span>
+          <span class="expert-tag">QSC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 SECRETS -->
+<section id="secrets">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">WHY WE WIN</div>
+      <h2 class="section-title">경쟁사가 따라오지 못하는<br><span style="color:var(--green);">스타터즈만의 4가지 비결</span></h2>
+      <p class="section-desc">똑같은 서비스를 더 싸게 제공한다고 되는 게 아닙니다.<br>근본적으로 다르게 접근하기 때문에 결과가 다릅니다.</p>
+    </div>
+    <div class="secrets-grid">
+      <div class="secret-card">
+        <div class="secret-num">01</div>
+        <div class="secret-icon">🎯</div>
+        <h3>집요함</h3>
+        <p>가맹점 1호 개설 때까지 팀 전원이 달라붙습니다. 계약 완료로 끝나는 게 아니라, 첫 가맹점이 흑자가 날 때까지가 우리 일입니다. 수십 번의 수정도, 수백 통의 전화도 아끼지 않습니다.</p>
+      </div>
+      <div class="secret-card">
+        <div class="secret-num">02</div>
+        <div class="secret-icon">🔍</div>
+        <h3>날카로움</h3>
+        <p>시장을 모르는 컨설턴트는 탁상공론만 합니다. 스타터즈는 현장 데이터 기반으로 실제 상권, 실제 소비자, 실제 경쟁사를 분석합니다. "될 것 같다"가 아닌 수치로 검증된 전략만 제시합니다.</p>
+      </div>
+      <div class="secret-card">
+        <div class="secret-num">03</div>
+        <div class="secret-icon">✨</div>
+        <h3>특별함</h3>
+        <p>세상에 똑같은 브랜드는 없습니다. 스타터즈는 모든 브랜드를 처음 만나는 것처럼 대합니다. 업종별 전문가 6인이 투입되어 맞춤 전략을 수립하고, 매 단계 대표님과 함께 방향을 결정합니다.</p>
+      </div>
+      <div class="secret-card">
+        <div class="secret-num">04</div>
+        <div class="secret-icon">📊</div>
+        <h3>결과 증명</h3>
+        <p>말보다 숫자로 증명합니다. 스타터즈와 함께한 브랜드의 1년 내 가맹점 개설 성공률 94%, 평균 ROI 회수 기간 11.3개월. 결과가 없으면 비용을 받지 않는 성과 연동 구조를 운영합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MULTI-CHANNEL MARKETING -->
+<section id="channels" style="background:var(--black-soft);">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">MARKETING POWER</div>
+      <h2 class="section-title">8개 채널 동시 가동<br><span style="color:var(--green);">가맹 문의가 4배 늘어나는 이유</span></h2>
+      <p class="section-desc">1~2개 채널만 운영하는 경쟁사와 달리, 스타터즈는 가맹점 모집에 최적화된 8개 채널을 동시에 운영합니다. 더 많은 예비 점주에게, 더 빠르게 닿습니다.</p>
+    </div>
+    <div class="channels-grid">
+      <div class="channel-chip"><span class="dot" style="background:#03C75A;"></span>네이버 검색·파워링크</div>
+      <div class="channel-chip"><span class="dot" style="background:#1877F2;"></span>Meta (인스타·페북) 광고</div>
+      <div class="channel-chip"><span class="dot" style="background:#EA4335;"></span>Google 검색·디스플레이</div>
+      <div class="channel-chip"><span class="dot" style="background:#FF0000;"></span>YouTube 브랜드 영상</div>
+      <div class="channel-chip"><span class="dot" style="background:#03C75A;"></span>네이버 블로그·카페</div>
+      <div class="channel-chip"><span class="dot" style="background:#FEE500;"></span>카카오 채널·모먼트</div>
+      <div class="channel-chip"><span class="dot" style="background:#22c55e;"></span>이메일 뉴스레터</div>
+      <div class="channel-chip"><span class="dot" style="background:#FF6F0F;"></span>당근마켓 지역 광고</div>
+    </div>
+    <div style="text-align:center;margin-top:48px;padding:32px;background:var(--black-card);border:1px solid var(--black-border);border-radius:16px;max-width:760px;margin-left:auto;margin-right:auto;margin-top:48px;">
+      <div style="font-size:13px;color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:12px;">RESULT</div>
+      <div style="font-size:clamp(20px,3vw,32px);font-weight:900;margin-bottom:8px;">
+        동일 예산 대비 <span style="color:var(--green);">4.2배</span> 더 많은 가맹 문의
+      </div>
+      <p style="font-size:15px;color:var(--gray-400);line-height:1.7;">멀티채널 전략 적용 브랜드 평균 기준 · 단채널 대비 측정</p>
+    </div>
+  </div>
+</section>
+
+<!-- FRANCHISES -->
+<section id="franchises">
+  <div class="section-inner">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; flex-wrap:wrap; gap:24px;">
+      <div>
+        <div class="section-badge">FRANCHISE LIST</div>
+        <h2 class="section-title">전국 프랜차이즈<br>가맹점 모집 현황</h2>
+        <p class="section-desc" style="margin-top:12px;">스타터즈와 함께 성장 중인 브랜드의 가맹 기회를 확인하세요.</p>
+      </div>
+    </div>
+    <div class="franchise-filter" id="categoryFilter">
+      <button class="filter-btn active" onclick="filterFranchise('all', this)">전체</button>
+      <button class="filter-btn" onclick="filterFranchise('food', this)">🍽 외식·카페</button>
+      <button class="filter-btn" onclick="filterFranchise('health', this)">💪 헬스·뷰티</button>
+      <button class="filter-btn" onclick="filterFranchise('edu', this)">📚 교육</button>
+      <button class="filter-btn" onclick="filterFranchise('service', this)">🛍 유통·서비스</button>
+    </div>
+    <div class="franchise-grid" id="franchiseGrid">
+
+      <div class="franchise-card" data-cat="food">
+        <div class="franchise-img" style="background:linear-gradient(135deg,#1a0a00,#3d1a00)">
+          <div class="franchise-img-placeholder">☕</div>
+          <div class="franchise-badge">모집중</div>
+        </div>
+        <div class="franchise-body">
+          <div class="franchise-cat">외식·카페</div>
+          <div class="franchise-name">브루마스터 커피</div>
+          <div class="franchise-desc">스페셜티 원두 직수입·직로스팅으로 차별화된 커피 품질. 소규모 운영에 최적화된 공간 효율 모델.</div>
+          <div class="franchise-meta">
+            <div class="meta-item">
+              <label>예상 창업비용</label>
+              <span>8,500만원~</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>예상 월매출</label>
+              <span>2,200만원~</span>
+            </div>
+            <div class="meta-item">
+              <label>운영 면적</label>
+              <span>10~20평</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>로열티</label>
+              <span>매출의 4%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="franchise-card" data-cat="food">
+        <div class="franchise-img" style="background:linear-gradient(135deg,#0a1a00,#1a3d00)">
+          <div class="franchise-img-placeholder">🍜</div>
+          <div class="franchise-badge">모집중</div>
+        </div>
+        <div class="franchise-body">
+          <div class="franchise-cat">외식·카페</div>
+          <div class="franchise-name">오리지널 라멘하우스</div>
+          <div class="franchise-desc">12시간 우려낸 돈코츠 육수 비법 레시피. 현재 직영 3호점 흑자 운영 중, 가맹 첫 공개.</div>
+          <div class="franchise-meta">
+            <div class="meta-item">
+              <label>예상 창업비용</label>
+              <span>1억 2,000만원~</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>예상 월매출</label>
+              <span>3,800만원~</span>
+            </div>
+            <div class="meta-item">
+              <label>운영 면적</label>
+              <span>20~35평</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>로열티</label>
+              <span>월 정액 35만원</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="franchise-card" data-cat="health">
+        <div class="franchise-img" style="background:linear-gradient(135deg,#001a0a,#003d1a)">
+          <div class="franchise-img-placeholder">💆</div>
+          <div class="franchise-badge">모집중</div>
+        </div>
+        <div class="franchise-body">
+          <div class="franchise-cat">헬스·뷰티</div>
+          <div class="franchise-name">슬림앤핏 바디케어</div>
+          <div class="franchise-desc">EMS 전신 관리 + 프리미엄 마사지 복합 케어. 여성 전용 프리미엄 바디케어 전문점.</div>
+          <div class="franchise-meta">
+            <div class="meta-item">
+              <label>예상 창업비용</label>
+              <span>9,800만원~</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>예상 월매출</label>
+              <span>2,800만원~</span>
+            </div>
+            <div class="meta-item">
+              <label>운영 면적</label>
+              <span>15~25평</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>로열티</label>
+              <span>매출의 5%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="franchise-card" data-cat="edu">
+        <div class="franchise-img" style="background:linear-gradient(135deg,#0a0a1a,#1a1a3d)">
+          <div class="franchise-img-placeholder">🎨</div>
+          <div class="franchise-badge">모집중</div>
+        </div>
+        <div class="franchise-body">
+          <div class="franchise-cat">교육</div>
+          <div class="franchise-name">키즈아트 창의교실</div>
+          <div class="franchise-desc">5~13세 대상 미술·공예 기반 창의력 교육. 자체 개발 커리큘럼 특허 보유, 재원율 92%.</div>
+          <div class="franchise-meta">
+            <div class="meta-item">
+              <label>예상 창업비용</label>
+              <span>6,500만원~</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>예상 월매출</label>
+              <span>1,900만원~</span>
+            </div>
+            <div class="meta-item">
+              <label>운영 면적</label>
+              <span>20~30평</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>로열티</label>
+              <span>월 정액 25만원</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="franchise-card" data-cat="service">
+        <div class="franchise-img" style="background:linear-gradient(135deg,#1a1a00,#3d3d00)">
+          <div class="franchise-img-placeholder">🚗</div>
+          <div class="franchise-badge">모집중</div>
+        </div>
+        <div class="franchise-body">
+          <div class="franchise-cat">유통·서비스</div>
+          <div class="franchise-name">클린카 세차 전문점</div>
+          <div class="franchise-desc">친환경 무기류 세차 시스템. 인건비 최소화 자동화 모델. 기존 세차장 전환 창업 가능.</div>
+          <div class="franchise-meta">
+            <div class="meta-item">
+              <label>예상 창업비용</label>
+              <span>5,500만원~</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>예상 월매출</label>
+              <span>2,100만원~</span>
+            </div>
+            <div class="meta-item">
+              <label>운영 면적</label>
+              <span>30~50평</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>로열티</label>
+              <span>매출의 3%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="franchise-card" data-cat="food">
+        <div class="franchise-img" style="background:linear-gradient(135deg,#1a0010,#3d002a)">
+          <div class="franchise-img-placeholder">🍰</div>
+          <div class="franchise-badge">준비중</div>
+        </div>
+        <div class="franchise-body">
+          <div class="franchise-cat">외식·카페</div>
+          <div class="franchise-name">마담베이크 디저트카페</div>
+          <div class="franchise-desc">무방부제 당일 생산 수제 케이크·마카롱 전문점. 인스타그램 팔로워 18만, 대기 수요 검증 완료.</div>
+          <div class="franchise-meta">
+            <div class="meta-item">
+              <label>예상 창업비용</label>
+              <span>7,800만원~</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>예상 월매출</label>
+              <span>2,500만원~</span>
+            </div>
+            <div class="meta-item">
+              <label>운영 면적</label>
+              <span>15~25평</span>
+            </div>
+            <div class="meta-item highlight">
+              <label>로열티</label>
+              <span>매출의 4%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a class="btn-outline" href="#contact" style="display:inline-block;">전체 가맹 리스트 보기 (28개 브랜드)</a>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSIS -->
+<section id="diagnosis">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">SELF DIAGNOSIS</div>
+      <h2 class="section-title">나에게 맞는 서비스 찾기</h2>
+      <p class="section-desc">5가지 질문에 답하면 최적의 역할과 요금제를 추천해 드립니다.</p>
+    </div>
+
+    <div id="quizWrap" style="max-width:720px;margin:48px auto 0;">
+      <!-- Progress -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-size:13px;color:var(--gray-400);" id="stepLabel">질문 1 / 5</span>
+          <span style="font-size:13px;color:var(--green);font-weight:700;" id="stepPct">20%</span>
+        </div>
+        <div style="height:4px;background:var(--black-border);border-radius:4px;overflow:hidden;">
+          <div id="progressBar" style="height:4px;background:var(--green);border-radius:4px;width:20%;transition:width .4s ease;"></div>
+        </div>
+      </div>
+
+      <!-- Questions -->
+      <div id="quizQuestions">
+
+        <div class="quiz-step" data-step="1" style="display:block;">
+          <div style="background:var(--black-card);border:1px solid var(--black-border);border-radius:16px;padding:36px 32px;">
+            <div style="font-size:13px;color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:12px;">Q1</div>
+            <h3 style="font-size:20px;font-weight:800;margin-bottom:28px;line-height:1.4;">현재 나의 상황은 무엇인가요?</h3>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="selectOpt(this,1,'owner')">🏪 이미 운영 중인 사업·브랜드가 있고, 프랜차이즈로 확장하고 싶다</button>
+              <button class="quiz-opt" onclick="selectOpt(this,1,'startup')">⭐ 창업을 준비 중이고, 좋은 프랜차이즈 브랜드에 가맹하고 싶다</button>
+              <button class="quiz-opt" onclick="selectOpt(this,1,'incubate')">🚀 창업 전 인큐베이팅으로 리스크 없이 먼저 경험해 보고 싶다</button>
+              <button class="quiz-opt" onclick="selectOpt(this,1,'info')">🔍 아직 정보 수집 단계이고, 어떤 방향이 맞는지 모르겠다</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-step" data-step="2" style="display:none;">
+          <div style="background:var(--black-card);border:1px solid var(--black-border);border-radius:16px;padding:36px 32px;">
+            <div style="font-size:13px;color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:12px;">Q2</div>
+            <h3 style="font-size:20px;font-weight:800;margin-bottom:28px;line-height:1.4;">현재 직영 매장(사업장)은 몇 개 운영하고 계신가요?</h3>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="selectOpt(this,2,'none')">0개 — 아직 없거나 준비 중</button>
+              <button class="quiz-opt" onclick="selectOpt(this,2,'one')">1~2개 — 운영 중, 검증 단계</button>
+              <button class="quiz-opt" onclick="selectOpt(this,2,'multi')">3개 이상 — 안정적으로 운영 중</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-step" data-step="3" style="display:none;">
+          <div style="background:var(--black-card);border:1px solid var(--black-border);border-radius:16px;padding:36px 32px;">
+            <div style="font-size:13px;color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:12px;">Q3</div>
+            <h3 style="font-size:20px;font-weight:800;margin-bottom:28px;line-height:1.4;">창업·컨설팅에 투입 가능한 예산 범위는?</h3>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="selectOpt(this,3,'low')">💰 5천만원 미만</button>
+              <button class="quiz-opt" onclick="selectOpt(this,3,'mid')">💰💰 5천만원 ~ 1억원</button>
+              <button class="quiz-opt" onclick="selectOpt(this,3,'high')">💰💰💰 1억원 이상</button>
+              <button class="quiz-opt" onclick="selectOpt(this,3,'unknown')">아직 정확히 모르겠다</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-step" data-step="4" style="display:none;">
+          <div style="background:var(--black-card);border:1px solid var(--black-border);border-radius:16px;padding:36px 32px;">
+            <div style="font-size:13px;color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:12px;">Q4</div>
+            <h3 style="font-size:20px;font-weight:800;margin-bottom:28px;line-height:1.4;">목표로 하는 업종·카테고리는 무엇인가요?</h3>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="selectOpt(this,4,'food')">🍽 외식·카페·베이커리</button>
+              <button class="quiz-opt" onclick="selectOpt(this,4,'health')">💪 헬스·뷰티·웰니스</button>
+              <button class="quiz-opt" onclick="selectOpt(this,4,'edu')">📚 교육·키즈·학원</button>
+              <button class="quiz-opt" onclick="selectOpt(this,4,'service')">🛍 유통·서비스·기타</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-step" data-step="5" style="display:none;">
+          <div style="background:var(--black-card);border:1px solid var(--black-border);border-radius:16px;padding:36px 32px;">
+            <div style="font-size:13px;color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:12px;">Q5</div>
+            <h3 style="font-size:20px;font-weight:800;margin-bottom:28px;line-height:1.4;">목표 시작 시기는 언제인가요?</h3>
+            <div class="quiz-options">
+              <button class="quiz-opt" onclick="selectOpt(this,5,'soon')">⚡ 3개월 이내 — 바로 시작하고 싶다</button>
+              <button class="quiz-opt" onclick="selectOpt(this,5,'half')">📅 6개월 ~ 1년 내</button>
+              <button class="quiz-opt" onclick="selectOpt(this,5,'later')">🗓 1년 이후 — 천천히 준비 중</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /quizQuestions -->
+
+      <!-- Navigation -->
+      <div id="quizNav" style="display:flex;justify-content:space-between;align-items:center;margin-top:24px;">
+        <button id="quizPrev" onclick="quizPrev()" style="background:none;border:1px solid var(--black-border);color:var(--gray-400);padding:10px 20px;border-radius:8px;font-size:14px;cursor:pointer;display:none;" onmouseover="this.style.borderColor='#22c55e';this.style.color='#22c55e'" onmouseout="this.style.borderColor='var(--black-border)';this.style.color='var(--gray-400)'">← 이전</button>
+        <div></div>
+        <button id="quizNext" onclick="quizNext()" disabled style="background:var(--green);color:var(--black);font-weight:800;font-size:14px;padding:10px 28px;border-radius:8px;border:none;cursor:pointer;opacity:.4;transition:opacity .2s;">다음 →</button>
+      </div>
+
+      <!-- Results (hidden initially) -->
+      <div id="quizResult" style="display:none;"></div>
+
+    </div><!-- /quizWrap -->
+  </div>
+</section>
+
+<!-- LEAD FORM -->
+<section id="contact" style="background:var(--black-soft);padding:96px 24px;">
+  <div class="section-inner">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1100px;margin:0 auto;">
+
+      <!-- Left: Text -->
+      <div>
+        <div class="section-badge">CONSULTATION</div>
+        <h2 class="section-title" style="margin-top:16px;">전문가와 무료 상담<br>지금 신청하세요</h2>
+        <p style="font-size:16px;color:var(--gray-300);line-height:1.8;margin-top:16px;margin-bottom:32px;">담당 컨설턴트가 영업일 기준 24시간 이내 연락드립니다. 부담 없이 현재 상황만 알려주세요.</p>
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="display:flex;align-items:flex-start;gap:16px;">
+            <div style="width:40px;height:40px;background:var(--green-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📞</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;">전화 상담</div>
+              <div style="font-size:14px;color:var(--gray-400);margin-top:2px;">1588-0000 · 평일 09:00~18:00</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px;">
+            <div style="width:40px;height:40px;background:var(--green-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">💬</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;">카카오 채널</div>
+              <div style="font-size:14px;color:var(--gray-400);margin-top:2px;">@스타터즈 · 실시간 문의 가능</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:16px;">
+            <div style="width:40px;height:40px;background:var(--green-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">✉️</div>
+            <div>
+              <div style="font-size:15px;font-weight:700;">이메일</div>
+              <div style="font-size:14px;color:var(--gray-400);margin-top:2px;">hello@starters.kr</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div style="background:var(--black-card);border:1px solid var(--black-border);border-radius:20px;padding:36px 32px;" id="leadFormWrap">
+        <div id="leadFormSuccess" style="display:none;text-align:center;padding:32px 0;">
+          <div style="font-size:48px;margin-bottom:16px;">✅</div>
+          <div style="font-size:20px;font-weight:800;margin-bottom:8px;">신청이 완료됐습니다!</div>
+          <div style="font-size:14px;color:var(--gray-400);line-height:1.7;">영업일 기준 24시간 이내<br>담당 컨설턴트가 연락드리겠습니다.</div>
+        </div>
+        <div id="leadFormBody">
+          <div style="font-size:18px;font-weight:800;margin-bottom:6px;">무료 상담 신청</div>
+          <div style="font-size:13px;color:var(--gray-500);margin-bottom:24px;">모든 항목 입력 후 제출해 주세요</div>
+          <div id="lead-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);color:#f87171;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:12px;"></div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div>
+              <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">이름 <span style="color:#f87171;">*</span></label>
+              <input id="lead-name" type="text" placeholder="홍길동" class="modal-input" style="margin-bottom:0;">
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">연락처 <span style="color:#f87171;">*</span></label>
+              <input id="lead-phone" type="tel" placeholder="010-0000-0000" class="modal-input" style="margin-bottom:0;">
+            </div>
+          </div>
+
+          <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">이메일 <span style="color:#f87171;">*</span></label>
+          <input id="lead-email" type="email" placeholder="your@email.com" class="modal-input">
+
+          <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">업체명 / 브랜드명</label>
+          <input id="lead-brand" type="text" placeholder="예) 홍길동 커피" class="modal-input">
+
+          <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">현재 상황 <span style="color:#f87171;">*</span></label>
+          <select id="lead-situation" class="modal-select">
+            <option value="">선택해 주세요</option>
+            <option>운영 중인 사업·브랜드가 있고 프랜차이즈 확장을 원한다</option>
+            <option>창업 준비 중이고 프랜차이즈 가맹을 원한다</option>
+            <option>인큐베이팅 프로그램으로 먼저 경험해 보고 싶다</option>
+            <option>아직 정보 수집 단계이다</option>
+          </select>
+
+          <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">관심 서비스</label>
+          <select id="lead-service" class="modal-select">
+            <option value="">선택해 주세요 (선택 사항)</option>
+            <option>A단계 — 브랜드 파운데이션 (490만원)</option>
+            <option>B단계 — 프랜차이즈 시스템 빌드 (990만원)</option>
+            <option>C단계 — 확장·매칭·개설 (500만원+5%)</option>
+            <option>A+B+C 통합 패키지</option>
+            <option>가맹 창업 문의 (스타루키/스타메이커)</option>
+          </select>
+
+          <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">문의 내용</label>
+          <textarea id="lead-msg" placeholder="현재 상황이나 궁금한 점을 자유롭게 적어주세요." rows="3" class="modal-input" style="resize:vertical;"></textarea>
+
+          <button onclick="submitLead()" style="width:100%;background:var(--green);color:var(--black);font-size:16px;font-weight:800;padding:14px;border-radius:8px;border:none;cursor:pointer;margin-top:4px;transition:background .2s;" onmouseover="this.style.background='#4ade80'" onmouseout="this.style.background='#22c55e'">무료 상담 신청하기 →</button>
+          <p style="font-size:12px;color:var(--gray-500);text-align:center;margin-top:10px;">개인정보는 상담 목적으로만 사용되며, 제3자에게 제공되지 않습니다.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WARNING + COMPETITOR COMPARISON -->
+<section id="compare" class="compare-section warning-section">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">WATCH OUT</div>
+      <h2 class="section-title"><span style="color:#f87171;">어설프게 아는 척하는 업체</span>에<br>그만 속으세요</h2>
+      <p class="section-desc">프랜차이즈 컨설팅 업체를 선택할 때 반드시 확인해야 할 체크리스트입니다.</p>
+    </div>
+
+    <div class="warning-box" style="margin-top:48px;">
+      <div class="warning-title">⚠️ 이런 업체는 피하세요</div>
+      <div class="warning-list">
+        <div class="warning-item">직영 프랜차이즈 운영 경험이 전혀 없으면서 "전문가"를 자처하는 곳</div>
+        <div class="warning-item">서류 작성 후 가맹점 모집·개점 지원을 별도 계약으로 추가 청구하는 곳</div>
+        <div class="warning-item">2~3년 장기 의무 계약 + 수천만원 위약금 조항으로 탈출을 막는 곳</div>
+        <div class="warning-item">성과와 무관하게 선불로 전액을 받아가고 책임을 지지 않는 곳</div>
+        <div class="warning-item">"성공 사례"는 많은데 실제 가맹점 폐업률·분쟁 건수는 공개하지 않는 곳</div>
+        <div class="warning-item">담당 컨설턴트가 수시로 교체되어 처음부터 다시 설명해야 하는 곳</div>
+      </div>
+    </div>
+
+    <div style="overflow-x:auto;margin-top:0;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="col-label" style="width:30%;">비교 항목</th>
+            <th class="col-them">일반 컨설팅 업체</th>
+            <th class="col-us">스타터즈</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-label">계약 기간</td>
+            <td class="col-them"><span class="badge-bad">2~3년 의무 계약</span></td>
+            <td class="col-us"><span class="badge-good">단계별 자유 계약</span></td>
+          </tr>
+          <tr>
+            <td class="col-label">위약금 조항</td>
+            <td class="col-them"><span class="badge-bad">최대 3,000만원+</span></td>
+            <td class="col-us"><span class="badge-good">없음 (7일 내 전액 환불)</span></td>
+          </tr>
+          <tr>
+            <td class="col-label">가맹점 모집</td>
+            <td class="col-them">별도 계약 추가 비용</td>
+            <td class="col-us"><span class="badge-good">C단계에 완전 포함</span></td>
+          </tr>
+          <tr>
+            <td class="col-label">성과 연동 구조</td>
+            <td class="col-them"><span class="badge-bad">선불 전액, 결과 무관</span></td>
+            <td class="col-us"><span class="badge-good">착수금 + 계약 성사당 성과 보수</span></td>
+          </tr>
+          <tr>
+            <td class="col-label">담당 전문가</td>
+            <td class="col-them">교체 잦은 주니어 컨설턴트</td>
+            <td class="col-us"><span class="badge-good">평균 15년+ 전담 시니어 PM</span></td>
+          </tr>
+          <tr>
+            <td class="col-label">마케팅 채널</td>
+            <td class="col-them">1~2개 (블로그·카페)</td>
+            <td class="col-us"><span class="badge-good">8개 채널 동시 운영</span></td>
+          </tr>
+          <tr>
+            <td class="col-label">직영 경험</td>
+            <td class="col-them"><span class="badge-bad">없거나 미공개</span></td>
+            <td class="col-us"><span class="badge-good">팀 전원 실전 운영 경험</span></td>
+          </tr>
+          <tr>
+            <td class="col-label">폐업률 공개</td>
+            <td class="col-them"><span class="badge-bad">비공개</span></td>
+            <td class="col-us"><span class="badge-good">5% 이하 (공개)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- EXCLUSIVITY CTA -->
+<section id="exclusivity" class="excl-section" style="padding:96px 24px;background:var(--black-soft);">
+  <div class="section-inner">
+    <div class="excl-box">
+      <div class="section-badge" style="display:inline-block;margin-bottom:24px;">EXCLUSIVE</div>
+      <div class="excl-quote">
+        저희는 <span class="accent">"아무 브랜드나"</span><br>
+        컨설팅하지 않습니다.
+      </div>
+      <p style="font-size:17px;color:var(--gray-400);line-height:1.8;max-width:600px;margin:0 auto 32px;">
+        스타터즈는 성공 가능성이 검증된 브랜드에만 전력을 다합니다.<br>
+        우리 팀의 집중력이 희석되면 모든 파트너의 결과가 나빠지기 때문입니다.
+      </p>
+      <div class="excl-criteria">
+        <div class="excl-item"><span class="check">✓</span><span>최소 1개 이상 직영점에서 수익성이 검증된 아이템</span></div>
+        <div class="excl-item"><span class="check">✓</span><span>브랜드 오너가 직접 사업을 이끌고 있거나, 이끌 의지가 있는 경우</span></div>
+        <div class="excl-item"><span class="check">✓</span><span>3~5년 내 10호점 이상 확장을 목표로 하는 중장기 비전 보유</span></div>
+        <div class="excl-item"><span class="check">✓</span><span>컨설팅 과정에서 적극적으로 협력하고 피드백을 수용할 준비가 된 경우</span></div>
+      </div>
+      <p style="font-size:14px;color:var(--gray-500);margin-bottom:32px;">기준을 충족하지 않더라도 상담은 무료로 진행됩니다. 현재 단계와 방향을 함께 점검해 드립니다.</p>
+      <a href="#contact" class="btn-primary" style="display:inline-block;font-size:16px;padding:16px 40px;">무료 적합성 상담 신청하기 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-badge">FAQ</div>
+      <h2 class="section-title">자주 묻는 질문</h2>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          스타터즈 서비스를 이용하려면 어떤 준비가 필요한가요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            별도의 사전 준비는 필요하지 않습니다. 현재 운영 중인 매장이나 아이템이 있다면 바로 시작하실 수 있습니다. 처음 상담 시 전담 컨설턴트가 현재 사업 현황을 청취하고 최적의 단계부터 시작할 수 있도록 안내드립니다. 직영점이 1개도 없는 상태에서도 진행 가능합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          A·B·C 단계를 반드시 순서대로 진행해야 하나요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            아닙니다. 이미 브랜드 아이덴티티나 SOP가 갖춰진 경우 B단계부터, 정보공개서 등록까지 완료된 경우 C단계만 단독으로 의뢰하실 수 있습니다. 초기 상담에서 현재 준비 상태를 진단한 후 필요한 단계만 맞춤 제안드립니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          정보공개서 등록까지 얼마나 시간이 걸리나요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            공정거래위원회 가맹사업법 기준 정보공개서 작성 및 등록은 통상 2~4개월이 소요됩니다. 스타터즈는 전담 법무팀이 서류 작성부터 공정위 검토 대응까지 전담하여 업계 평균 대비 30% 빠른 처리를 목표로 합니다. 서류 보완 요청 시에도 즉각 대응하여 기간 단축에 최선을 다합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          C단계의 '계약 성사당 5%'는 어떻게 산정되나요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            가맹 계약 체결 시 가맹비(가입비)를 기준으로 5%를 성과 보수로 청구합니다. 예를 들어 가맹비가 1,000만 원이라면 50만 원이 성과 보수입니다. 계약이 성사되지 않으면 성과 보수는 발생하지 않습니다. 가맹비 산정 기준은 계약 전 투명하게 공개하며, 별도 숨겨진 수수료는 없습니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          F&B 외 업종(뷰티·교육·서비스 등)도 컨설팅이 가능한가요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            가능합니다. 스타터즈는 외식업뿐만 아니라 뷰티·헬스케어, 교육, 유통·서비스업 전반의 프랜차이즈 구축 경험을 보유하고 있습니다. 업종별 특화 전문가가 해당 산업의 가맹사업법 적용 기준 및 시장 특성에 맞춘 맞춤형 컨설팅을 제공합니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          비용 분납이 가능한가요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            A·B 단계 패키지는 계약금 50% + 중도금 30% + 잔금 20% 형태의 3회 분납이 가능합니다. 자금 사정에 따라 협의도 가능하오니 상담 시 말씀해 주세요. C단계는 착수금 100% + 성과 보수 후불 구조로 진행됩니다.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          서비스 진행 중 중도 해지가 가능한가요?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <div class="faq-a-inner">
+            계약 후 7일 이내 청약 철회 시 전액 환불이 가능합니다. 그 이후 중도 해지 시에는 이미 완료된 작업 단계에 대한 비용을 공제 후 나머지 금액을 환불합니다. 작업 단계별 산정 기준은 계약서에 명시되어 있으며, 분쟁 시 한국공정거래조정원 조정을 따릅니다.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">스타터<span>즈</span></div>
+        <p class="footer-about">독창적인 아이템을 보유한 소상공인·소기업의 프랜차이즈 확장을 돕는 원스톱 컨설팅 플랫폼. 사업성 분석부터 점주 매칭까지 전담합니다.</p>
+        <div style="margin-top:20px;font-size:13px;color:var(--gray-500);">
+          사업자등록번호: 123-45-67890<br>
+          대표: 김재원 | 서울특별시 강남구 테헤란로 123
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>서비스</h4>
+        <ul>
+          <li>사업성 분석</li>
+          <li>브랜드 패키징</li>
+          <li>법률 검토</li>
+          <li>마케팅 전략</li>
+          <li>점주 매칭</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>플랫폼</h4>
+        <ul>
+          <li>프랜차이즈 리스트</li>
+          <li>가맹 창업 문의</li>
+          <li>전문가 소개</li>
+          <li>성공 사례</li>
+          <li>파트너 등록</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>고객 지원</h4>
+        <ul>
+          <li>📞 1588-0000</li>
+          <li>✉️ hello@starters.kr</li>
+          <li>FAQ</li>
+          <li>이용약관</li>
+          <li>개인정보처리방침</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 스타터즈. All rights reserved.</div>
+      <div style="color:var(--gray-500);">Made with 스타터즈 — 당신의 브랜드를 프랜차이즈로</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── 환경별 URL 설정 ─────────────────────────────────────
+  // 로컬: file:// → localhost 사용
+  // 프로덕션: 홈페이지.html을 Railway 앱과 같은 도메인에 올린 경우 자동 감지
+  const isLocal = location.protocol === 'file:' || location.hostname === 'localhost';
+  const API_BASE  = isLocal ? 'http://localhost:5000' : (window.STARTERS_API || '');
+  const APP_BASE  = isLocal ? 'http://localhost:5173' : (window.STARTERS_APP || location.origin);
+
+  // ── ADD-ON TOGGLE ───────────────────────────────────────
+  function toggleAddon(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+    btn.querySelector('span:first-child').textContent = isOpen ? '➕ ADD-ON 옵션 보기 (별도)' : '➖ ADD-ON 옵션 닫기';
+  }
+
+  // ── DIAGNOSIS QUIZ ──────────────────────────────────────
+  let quizStep = 1;
+  const totalSteps = 5;
+  const answers = {};
+
+  function selectOpt(el, step, val) {
+    document.querySelectorAll(`.quiz-step[data-step="${step}"] .quiz-opt`).forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[step] = val;
+    const nextBtn = document.getElementById('quizNext');
+    nextBtn.disabled = false;
+    nextBtn.style.opacity = '1';
+    nextBtn.style.cursor = 'pointer';
+  }
+
+  function updateProgress() {
+    const pct = Math.round((quizStep / totalSteps) * 100);
+    document.getElementById('stepLabel').textContent = `질문 ${quizStep} / ${totalSteps}`;
+    document.getElementById('stepPct').textContent = pct + '%';
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('quizPrev').style.display = quizStep > 1 ? 'block' : 'none';
+    const nextBtn = document.getElementById('quizNext');
+    nextBtn.disabled = !answers[quizStep];
+    nextBtn.style.opacity = answers[quizStep] ? '1' : '.4';
+    nextBtn.style.cursor = answers[quizStep] ? 'pointer' : 'default';
+  }
+
+  function quizNext() {
+    if (!answers[quizStep]) return;
+    if (quizStep === totalSteps) { showResult(); return; }
+    document.querySelector(`.quiz-step[data-step="${quizStep}"]`).style.display = 'none';
+    quizStep++;
+    document.querySelector(`.quiz-step[data-step="${quizStep}"]`).style.display = 'block';
+    updateProgress();
+  }
+
+  function quizPrev() {
+    if (quizStep <= 1) return;
+    document.querySelector(`.quiz-step[data-step="${quizStep}"]`).style.display = 'none';
+    quizStep--;
+    document.querySelector(`.quiz-step[data-step="${quizStep}"]`).style.display = 'block';
+    updateProgress();
+  }
+
+  function showResult() {
+    document.getElementById('quizQuestions').style.display = 'none';
+    document.getElementById('quizNav').style.display = 'none';
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('stepLabel').textContent = '진단 완료!';
+    document.getElementById('stepPct').textContent = '100%';
+
+    const a = answers;
+    let role, roleLabel, roleColor, roleEmoji, pkg, pkgLabel, pkgPrice, pkgDesc, addons, urgency;
+
+    // 역할 결정
+    if (a[1] === 'owner') {
+      role = 'master'; roleLabel = '스타마스터'; roleColor = '#f59e0b'; roleEmoji = '👑';
+    } else if (a[1] === 'incubate') {
+      role = 'maker'; roleLabel = '스타메이커'; roleColor = '#a855f7'; roleEmoji = '🚀';
+    } else {
+      role = 'rookie'; roleLabel = '스타루키'; roleColor = '#3b82f6'; roleEmoji = '⭐';
+    }
+
+    // 패키지 결정 (스타마스터인 경우)
+    if (role === 'master') {
+      if (a[2] === 'multi' && (a[3] === 'high' || a[3] === 'mid')) {
+        pkg = 'B'; pkgLabel = 'B단계 패키지'; pkgPrice = '9,900,000원'; pkgDesc = '이미 운영 중인 브랜드에 법적 시스템·정보공개서·가맹계약서 완성 단계가 필요합니다.';
+        addons = ['상표권 추가 등록', 'POS·키오스크 구축', '법인 설립 대행'];
+      } else if (a[2] === 'multi') {
+        pkg = 'C'; pkgLabel = 'C단계 패키지'; pkgPrice = '5,000,000원 + 계약당 5%'; pkgDesc = '시스템이 갖춰진 브랜드라면 실제 가맹점 모집과 점주 매칭에 집중하세요.';
+        addons = ['박람회 부스 참가', '가맹 모집 광고 제작', 'SNS 운영 대행'];
+      } else {
+        pkg = 'A'; pkgLabel = 'A단계 패키지'; pkgPrice = '4,900,000원'; pkgDesc = '브랜드 아이덴티티·SOP·메뉴 표준화 등 프랜차이즈 확장을 위한 기반을 먼저 구축하세요.';
+        addons = ['인테리어 가이드라인 제작', '메뉴 사진·영상 촬영', '상권 분석 추가 지역'];
+      }
+    } else if (role === 'maker') {
+      pkg = 'incubate'; pkgLabel = '인큐베이팅 프로그램'; pkgPrice = '가맹주 승인 후 무료 참여'; pkgDesc = '관심 있는 브랜드에 인큐베이팅 신청을 하세요. 실전 경험 후 정식 가맹으로 전환할 수 있습니다.';
+      addons = ['스타메이커 플랫폼 가입', '프랜차이즈 탐색', '인큐베이팅 신청'];
+    } else {
+      pkg = 'franchise'; pkgLabel = '가맹 창업 플랜'; pkgPrice = '브랜드별 상이'; pkgDesc = '관심 분야 프랜차이즈를 탐색하고 가맹 신청을 제출하세요. 창업 비용·예상 수익 정보를 미리 확인하세요.';
+      if (a[3] === 'food') addons = ['외식·카페 브랜드 리스트', '상권 분석 지원', '가맹 신청'];
+      else if (a[3] === 'health') addons = ['헬스·뷰티 브랜드 리스트', '입지 선정 지원', '가맹 신청'];
+      else if (a[3] === 'edu') addons = ['교육 브랜드 리스트', '지역 수요 분석', '가맹 신청'];
+      else addons = ['유통·서비스 브랜드 리스트', '창업 비용 상담', '가맹 신청'];
+    }
+
+    // 긴급도
+    if (a[5] === 'soon') urgency = '⚡ 빠른 진행을 원하시므로 즉시 상담을 추천드립니다.';
+    else if (a[5] === 'half') urgency = '📅 6개월 내 목표이시므로 지금 준비를 시작하는 것이 좋습니다.';
+    else urgency = '🗓 여유 있게 준비하실 수 있습니다. 정보 수집부터 시작하세요.';
+
+    const catLabel = { food:'외식·카페', health:'헬스·뷰티', edu:'교육', service:'유통·서비스' }[a[4]] || '';
+
+    document.getElementById('quizResult').innerHTML = `
+      <div class="quiz-result-card">
+        <div class="result-badge">✨ 진단 결과</div>
+        <h3 style="font-size:26px;font-weight:900;margin-bottom:8px;">당신에게 맞는 역할은</h3>
+        <div style="margin-bottom:20px;">
+          <span class="result-role-chip" style="background:rgba(${roleColor==='#f59e0b'?'245,158,11':roleColor==='#a855f7'?'168,85,247':'59,130,246'},0.15);color:${roleColor};border:1px solid ${roleColor}40;">
+            ${roleEmoji} ${roleLabel}
+          </span>
+          ${catLabel ? `<span class="result-role-chip" style="background:var(--green-dim);color:var(--green-light);border:1px solid rgba(34,197,94,0.3);">🏷 ${catLabel}</span>` : ''}
+        </div>
+        <div class="result-pkg">
+          <div style="font-size:12px;color:var(--green);font-weight:700;letter-spacing:1px;margin-bottom:6px;">추천 서비스</div>
+          <div style="font-size:18px;font-weight:800;margin-bottom:4px;">${pkgLabel}</div>
+          <div style="font-size:20px;font-weight:900;color:var(--green);margin-bottom:8px;">${pkgPrice}</div>
+          <div style="font-size:14px;color:var(--gray-300);line-height:1.7;">${pkgDesc}</div>
+        </div>
+        <div style="margin-top:20px;">
+          <div style="font-size:12px;color:var(--gray-400);font-weight:700;margin-bottom:8px;">추천 추가 항목</div>
+          ${addons.map(a => `<span class="result-addon-chip">✓ ${a}</span>`).join('')}
+        </div>
+        <div style="margin-top:20px;padding:14px 16px;background:var(--black-soft);border-radius:10px;font-size:14px;color:var(--gray-300);">${urgency}</div>
+        <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap;">
+          <a href="#contact" onclick="document.getElementById('lead-situation').value=document.getElementById('lead-situation').options[${a[1]==='owner'?1:a[1]==='incubate'?3:2}].text;document.getElementById('lead-service').selectedIndex=${pkg==='A'?1:pkg==='B'?2:pkg==='C'?3:pkg==='incubate'?5:5};" class="btn-primary" style="flex:1;min-width:160px;text-align:center;">무료 상담 신청하기 →</a>
+          <button onclick="resetQuiz()" style="background:none;border:1px solid var(--black-border);color:var(--gray-400);padding:14px 24px;border-radius:8px;font-size:14px;cursor:pointer;white-space:nowrap;" onmouseover="this.style.borderColor='#22c55e';this.style.color='#22c55e'" onmouseout="this.style.borderColor='var(--black-border)';this.style.color='var(--gray-400)'">다시 진단하기</button>
+        </div>
+      </div>`;
+    document.getElementById('quizResult').style.display = 'block';
+  }
+
+  function resetQuiz() {
+    Object.keys(answers).forEach(k => delete answers[k]);
+    quizStep = 1;
+    document.querySelectorAll('.quiz-step').forEach((s,i) => s.style.display = i===0?'block':'none');
+    document.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
+    document.getElementById('quizResult').style.display = 'none';
+    document.getElementById('quizQuestions').style.display = 'block';
+    document.getElementById('quizNav').style.display = 'flex';
+    updateProgress();
+  }
+
+  // ── LEAD FORM ────────────────────────────────────────────
+  function submitLead() {
+    const name = document.getElementById('lead-name').value.trim();
+    const phone = document.getElementById('lead-phone').value.trim();
+    const email = document.getElementById('lead-email').value.trim();
+    const situation = document.getElementById('lead-situation').value;
+
+    if (!name || !phone || !email || !situation) {
+      const el = document.getElementById('lead-error');
+      el.textContent = '이름, 연락처, 이메일, 현재 상황은 필수 항목입니다.';
+      el.style.display = 'block';
+      el.scrollIntoView({ behavior:'smooth', block:'center' });
+      setTimeout(() => el.style.display='none', 4000);
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('lead-error').textContent = '올바른 이메일 형식을 입력해 주세요.';
+      document.getElementById('lead-error').style.display = 'block';
+      setTimeout(() => document.getElementById('lead-error').style.display='none', 3000);
+      return;
+    }
+    // 실제 운영 시 API 연동 — 현재는 성공 화면 표시
+    document.getElementById('leadFormBody').style.display = 'none';
+    document.getElementById('leadFormSuccess').style.display = 'block';
+  }
+
+  // ── FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Franchise filter
+  function filterFranchise(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.franchise-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat === cat) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // ── LOGIN MODAL ──────────────────────────────────────────
+  function openModal(tab) {
+    document.getElementById('loginModal').classList.add('open');
+    if (tab === 'login') switchTab('login');
+    else switchTab('register');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('loginModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  function switchTab(tab) {
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('form-login').style.display = tab === 'login' ? '' : 'none';
+    document.getElementById('form-register').style.display = tab === 'register' ? '' : 'none';
+  }
+
+  async function doLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    if (!email || !pass) { showError('login-error', '이메일과 비밀번호를 입력해 주세요.'); return; }
+
+    const btn = document.getElementById('login-btn');
+    btn.textContent = '로그인 중...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: pass }),
+      });
+      const data = await res.json();
+      if (!res.ok) { showError('login-error', data.message || '로그인에 실패했습니다.'); return; }
+      // 토큰을 해시로 전달 → React가 읽어 localStorage에 저장 후 대시보드로 이동
+      window.location.href = `${APP_BASE}/#token=` + data.token;
+    } catch {
+      showError('login-error', '서버에 연결할 수 없습니다. 플랫폼이 실행 중인지 확인하세요.');
+    } finally {
+      btn.textContent = '플랫폼 로그인';
+      btn.disabled = false;
+    }
+  }
+
+  async function doRegister() {
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-pass').value;
+    const role = document.getElementById('reg-role').value;
+    if (!name || !email || !password || !role) { showError('reg-error', '모든 항목을 입력해 주세요.'); return; }
+    if (password.length < 6) { showError('reg-error', '비밀번호는 6자 이상이어야 합니다.'); return; }
+
+    const btn = document.getElementById('reg-btn');
+    btn.textContent = '가입 중...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(`${API_BASE}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password, role }),
+      });
+      const data = await res.json();
+      if (!res.ok) { showError('reg-error', data.message || '가입에 실패했습니다.'); return; }
+      window.location.href = `${APP_BASE}/#token=` + data.token;
+    } catch {
+      showError('reg-error', '서버에 연결할 수 없습니다. 플랫폼이 실행 중인지 확인하세요.');
+    } finally {
+      btn.textContent = '가입 후 플랫폼 시작';
+      btn.disabled = false;
+    }
+  }
+
+  function showError(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  }
+
+  // ── COUNTER ANIMATION ───────────────────────────────────
+  function animateCounter(el, target, suffix, duration) {
+    let start = 0;
+    const isFloat = String(target).includes('.');
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { start = target; clearInterval(timer); }
+      el.textContent = (isFloat ? start.toFixed(1) : Math.floor(start)) + suffix;
+    }, 16);
+  }
+
+  const countersConfig = [
+    { id:'cnt1', target:1, suffix:'년', label:'1년' },
+    { id:'cnt2', target:96.4, suffix:'%', label:'96.4%' },
+    { id:'cnt3', target:5, suffix:'%', label:'5%' },
+    { id:'cnt4', target:4.2, suffix:'배', label:'4.2배' },
+    { id:'cnt5', target:340, suffix:'+', label:'340+' },
+  ];
+
+  let countersStarted = false;
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) {
+    const statsObs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !countersStarted) {
+        countersStarted = true;
+        countersConfig.forEach(c => {
+          const el = document.getElementById(c.id);
+          if (el) animateCounter(el, c.target, c.suffix, 1800);
+        });
+      }
+    }, { threshold: 0.3 });
+    statsObs.observe(statsBar);
+  }
+
+  // ── SMOOTH NAV ACTIVE ────────────────────────────────────
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    document.querySelectorAll('section[id]').forEach(sec => {
+      const top = sec.offsetTop - 80;
+      const bottom = top + sec.offsetHeight;
+      if (scrollY >= top && scrollY < bottom) {
+        navLinks.forEach(a => {
+          a.style.color = a.getAttribute('href') === '#' + sec.id ? 'var(--green)' : '';
+        });
+      }
+    });
+  });
+
+  // ── SCROLL ANIMATION ─────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .pricing-card, .expert-card, .franchise-card, .problem-card, .role-card, .secret-card, .channel-chip, .excl-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    observer.observe(el);
+  });
+</script>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
+      <svg width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#22c55e"/><text x="16" y="23" font-family="Arial Black,sans-serif" font-size="20" font-weight="900" text-anchor="middle" fill="#000">S</text></svg>
+      <span style="font-size:20px;font-weight:900;">스타터<span style="color:var(--green)">즈</span></span>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab" id="tab-register" onclick="switchTab('register')">회원가입</button>
+      <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">로그인</button>
+    </div>
+
+    <!-- 로그인 폼 -->
+    <div id="form-login">
+      <div id="login-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);color:#f87171;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:12px;"></div>
+      <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">이메일</label>
+      <input id="login-email" type="email" placeholder="your@email.com" class="modal-input" onkeydown="if(event.key==='Enter')doLogin()">
+      <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">비밀번호</label>
+      <input id="login-pass" type="password" placeholder="비밀번호 입력" class="modal-input" onkeydown="if(event.key==='Enter')doLogin()">
+      <button id="login-btn" class="modal-submit" onclick="doLogin()">플랫폼 로그인</button>
+      <p class="modal-hint">
+        테스트 계정 (비밀번호: <strong style="color:var(--green)">test1234</strong>)<br>
+        스타마스터: master1@starters.kr &nbsp;·&nbsp; 스타루키: rookie1@starters.kr<br>
+        스타메이커: maker1@starters.kr &nbsp;·&nbsp; 스타매니저: manager@starters.kr
+      </p>
+    </div>
+
+    <!-- 회원가입 폼 -->
+    <div id="form-register" style="display:none">
+      <div id="reg-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);color:#f87171;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:12px;"></div>
+      <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">이름</label>
+      <input id="reg-name" type="text" placeholder="홍길동" class="modal-input">
+      <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">이메일</label>
+      <input id="reg-email" type="email" placeholder="your@email.com" class="modal-input">
+      <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">비밀번호</label>
+      <input id="reg-pass" type="password" placeholder="6자 이상" class="modal-input">
+      <label style="font-size:12px;color:var(--gray-400);font-weight:600;display:block;margin-bottom:6px;">역할 선택</label>
+      <select id="reg-role" class="modal-select">
+        <option value="">역할을 선택하세요</option>
+        <option value="star_master">👑 스타마스터 (가맹주 · 프랜차이즈 본사)</option>
+        <option value="star_rookie">⭐ 스타루키 (예비 점주 · 가맹 창업)</option>
+        <option value="star_maker">🚀 스타메이커 (인큐베이팅 점주)</option>
+      </select>
+      <button id="reg-btn" class="modal-submit" onclick="doRegister()">가입 후 대시보드로 이동</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
