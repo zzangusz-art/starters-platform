@@ -51,7 +51,7 @@ app.get('/api/health', (req, res) =>
 // ── 프로덕션: 정적 파일 서빙 ──────────────────────────────
 if (IS_PROD) {
   const clientDist = path.join(__dirname, '../client/dist');
-  const homepageFile = path.join(__dirname, '../홈페이지.html');
+  const homepageFile = path.join(__dirname, '../homepage.html');
 
   // 1) 루트(/) → 마케팅 홈페이지
   app.get('/', (req, res) => res.sendFile(homepageFile));
