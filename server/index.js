@@ -48,11 +48,19 @@ app.get('/api/health', (req, res) =>
   res.json({ status: 'ok', message: '스타터즈 서버 정상 작동 중', env: IS_PROD ? 'production' : 'development' })
 );
 
-// ── 프로덕션: React 빌드 정적 파일 서빙 ─────────────────
+// ── 프로덕션: 정적 파일 서빙 ──────────────────────────────
 if (IS_PROD) {
   const clientDist = path.join(__dirname, '../client/dist');
-  app.use(express.static(clientDist));
-  // API가 아닌 모든 요청 → index.html (SPA 라우팅)
+  const homepageFile = path.join(__dirname, '../홈페이지.html');
+
+  // 1) 루트(/) → 마케팅 홈페이지
+  app.get('/', (req, res) => res.sendFile(homepageFile));
+
+  // 2) React 빌드 정적 에셋 (JS, CSS, images 등)
+  //    index: false → '/'에서 index.html 자동 서빙 방지
+  app.use(express.static(clientDist, { index: false }));
+
+  // 3) SPA 라우팅 — /login, /register, /master, /rookie … 모두 React index.html
   app.get('*', (req, res) => {
     if (!req.path.startsWith('/api')) {
       res.sendFile(path.join(clientDist, 'index.html'));
