@@ -389,6 +389,10 @@
   .float-btn.secondary:hover { border-color:var(--green); color:var(--green); }
   .float-sub { display:none; flex-direction:column; align-items:flex-end; gap:8px; }
   .float-sub.open { display:flex; }
+  .float-live { display:flex; align-items:center; gap:6px; background:rgba(10,10,10,.88); border:1px solid rgba(34,197,94,.35); color:#d1fae5; font-size:12px; font-weight:600; padding:6px 12px; border-radius:100px; backdrop-filter:blur(8px); white-space:nowrap; box-shadow:0 2px 12px rgba(0,0,0,.5); }
+  .float-live-dot { width:7px; height:7px; background:#22c55e; border-radius:50%; flex-shrink:0; animation:livepulse 1.6s ease-in-out infinite; }
+  @keyframes livepulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+  .float-live-num { color:#22c55e; font-weight:800; transition:opacity .35s; }
 
   /* Responsive */
   @media(max-width:768px) {
@@ -2307,6 +2311,44 @@
   document.getElementById('floatingCta').style.opacity = '0';
   document.getElementById('floatingCta').style.transition = 'opacity .4s';
 
+  // ── 실시간 접속자 수 (50~150 난수) ───────────────────────
+  (function initViewerCount() {
+    const el = document.getElementById('floatViewerNum');
+    if (!el) return;
+
+    // 50~150 사이 정수 반환 (현재값 ±1~5 소폭 변동으로 자연스럽게)
+    let current = Math.floor(Math.random() * 101) + 50; // 50~150
+
+    function randInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    function nextCount() {
+      // 현재값에서 -5 ~ +5 변동, 단 50~150 범위 유지
+      const delta = randInt(-5, 5);
+      current = Math.min(150, Math.max(50, current + delta));
+      return current;
+    }
+    function updateNum() {
+      const next = nextCount();
+      // 페이드 아웃 → 숫자 교체 → 페이드 인
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.textContent = next;
+        el.style.opacity = '1';
+      }, 350);
+    }
+
+    // 초기값 즉시 세팅
+    el.textContent = current;
+
+    // 8~15초 간격으로 업데이트 (너무 빠르면 작위적으로 보임)
+    function scheduleNext() {
+      const delay = randInt(8000, 15000);
+      setTimeout(() => { updateNum(); scheduleNext(); }, delay);
+    }
+    scheduleNext();
+  })();
+
   // ── SMOOTH NAV ACTIVE ────────────────────────────────────
   const navLinks = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
@@ -2528,6 +2570,10 @@
 
 <!-- ── 플로팅 CTA ──────────────────────────────────────── -->
 <div class="floating-cta" id="floatingCta">
+  <div class="float-live" id="floatLive">
+    <span class="float-live-dot"></span>
+    <span><span class="float-live-num" id="floatViewerNum">--</span>명 함께 보고 있습니다</span>
+  </div>
   <div class="float-sub" id="floatSub">
     <button class="float-btn secondary" onclick="openSurvey();toggleFloat()">📋 무료 자가진단</button>
     <button class="float-btn secondary" onclick="openConsult();toggleFloat()">📝 상담신청서 작성</button>
